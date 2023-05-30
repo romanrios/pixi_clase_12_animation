@@ -1,19 +1,27 @@
-import { Application, Sprite } from 'pixi.js'
+import { Application, Assets, Sprite } from 'pixi.js'
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
-	backgroundColor: 0x6495ed,
+	backgroundColor: '#54C3FF',
 	width: 640,
 	height: 480
 });
 
-const clampy: Sprite = Sprite.from("./clampy.png");
 
-clampy.anchor.set(0.5);
+Assets.add("Clampy", "./clampy.png");
+Assets.add("Mushroom", "./mushroom.png");
 
-clampy.x = 300;
-clampy.y = 300;
+Assets.load(["Clampy", "Mushroom"]).then(() => {
 
-app.stage.addChild(clampy);
+	const mushroom: Sprite = Sprite.from("Mushroom");
+	console.log("Hola mundo!", mushroom.width, mushroom.height);
+	mushroom.anchor.set(0.5);
+	mushroom.x = app.screen.width/2;
+	mushroom.y = app.screen.height/2;
+	app.stage.addChild(mushroom);
+
+});
+
+
