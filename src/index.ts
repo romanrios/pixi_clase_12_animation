@@ -38,8 +38,10 @@ window.dispatchEvent(new Event("resize"));
 Assets.add("Hat", "./hat.png");
 Assets.add("Mushroom_eyeless", "./mushroom_eyeless.png");
 Assets.add("Mushroom_eyes", "./mushroom_eyes.png");
+Assets.add("Pipe", "./pipe.png");
 
-Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes"]).then(() => {
+
+Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes","Pipe"]).then(() => {
 
 	const mushroom: Sprite = Sprite.from("Mushroom_eyeless");
 	mushroom.anchor.set(0.5);
@@ -66,15 +68,31 @@ Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes"]).then(() => {
 	mushroomContainer.y = app.screen.height / 2;
 	app.stage.addChild(mushroomContainer);
 
+	const pipe : Sprite = Sprite.from("Pipe");
+	pipe.scale.set(1.25);
+	pipe.angle = 90;
+	pipe.x = 300;
+	pipe.y = 110;
+	app.stage.addChild(pipe);
 
-	let speed = 0.5
+
+	let speed = 0.5;
 	app.ticker.add(() => {
-		mushroomContainer.angle -= 0.2 ;
+		mushroomContainer.angle -= 0.5 ;
 		eyes.x += speed;
 		if (eyes.x < -10 || eyes.x > 10){
-			speed = -speed
+			speed = -speed;
 		}
 		hat.angle += speed;
+	});
+
+	let speed_b = 5;
+	app.ticker.add(() => {
+		mushroomContainer.x += speed_b ;
+		if (mushroomContainer.x < 100 || mushroomContainer.x > 1170){
+			speed_b = -speed_b;
+		}
+		
 	});
 
 });
