@@ -107,7 +107,8 @@ Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes", "Pipe"]).then(() => {
 			speed_b = -speed_b;
 		}
 
-		graphy.x += speed * delta; 
+		graphy.scale.x += 0.005 * speed * delta; 
+		graphy.scale.y += 0.005 * speed * delta;
 	});
 
 
