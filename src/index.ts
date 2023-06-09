@@ -64,11 +64,12 @@ Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes", "Pipe"]).then(() => {
 	const graphy: Graphics = new Graphics();
 	graphy.beginFill(0x8ad2ff);
 	graphy.lineStyle(280, 0x6ec7ff);
-	graphy.drawCircle(0, 0, 380); // See how I set the drawing at 0,0? NOT AT 100, 100!
+	graphy.drawCircle(0, 0, 380); 
 	graphy.endFill();
 	app.stage.addChild(graphy);
 	graphy.x = app.screen.width / 2;
 	graphy.y = app.screen.height / 2;
+	graphy.moveTo(700, 550);
 
 
 	const mushroomContainer: Container = new Container();
@@ -93,17 +94,20 @@ Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes", "Pipe"]).then(() => {
 	let speed = 0.5;
 	let speed_b = 5;
 	app.ticker.add((delta) => {
+		eyes.x += speed * delta;
+		if (eyes.x < -10 || eyes.x > 10) {
+			speed = -speed;
+		}
+
+		hat.angle += speed;
+
 		mushroomContainer.angle -= 0.5 * delta;
 		mushroomContainer.x += speed_b * delta;
 		if (mushroomContainer.x < 100 || mushroomContainer.x > 1170) {
 			speed_b = -speed_b;
 		}
-		eyes.x += speed * delta;
-		if (eyes.x < -10 || eyes.x > 10) {
-			speed = -speed;
-		}
-		hat.angle += speed;
-		graphy.x += speed * delta; // GRAPHICS TEST
+
+		graphy.x += speed * delta; 
 	});
 
 
