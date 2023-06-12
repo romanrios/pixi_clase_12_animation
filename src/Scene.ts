@@ -71,7 +71,7 @@ export class Scene extends Container {
         robotAnimated.play();
         robotAnimated.animationSpeed = 0.3;
         robotAnimated.scale.set(1.5);
-        robotAnimated.position.set(800, 0);
+        robotAnimated.position.set(900, 0);
         this.addChild(robotAnimated); 
 
 
@@ -93,7 +93,7 @@ export class Scene extends Container {
         this.addChild(panel2);
         panel2.width = 150;
         panel2.height = 200;
-        panel2.position.set(1000,50);
+        panel2.position.set(700,40);
 
 
         // Ticker
