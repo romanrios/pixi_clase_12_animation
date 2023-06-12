@@ -31,6 +31,7 @@ window.addEventListener("resize", () => {
 	appview.style.marginTop = marginVertical + "px";
 	appview.style.marginBottom = marginVertical + "px";
 });
+
 window.dispatchEvent(new Event("resize"));
 
 Assets.addBundle("myAssets", assets);

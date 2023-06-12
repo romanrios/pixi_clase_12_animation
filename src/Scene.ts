@@ -71,7 +71,7 @@ export class Scene extends Container {
         robotAnimated.play();
         robotAnimated.animationSpeed = 0.3;
         robotAnimated.scale.set(1.5);
-        robotAnimated.position.set(200, 200);
+        robotAnimated.position.set(800, 0);
         this.addChild(robotAnimated); 
 
 
@@ -81,9 +81,9 @@ export class Scene extends Container {
             40, 40, 40, 40
             );
         this.addChild(panel);
-        panel.width = 600;
-        panel.height = 300;
-        panel.position.set(600,242);
+        panel.width = 300;
+        panel.height = 80;
+        panel.position.set(800,192);
 
 
         const panel2 = new NineSlicePlane(
@@ -91,9 +91,9 @@ export class Scene extends Container {
             40, 40, 40, 40
             );
         this.addChild(panel2);
-        panel2.width = 200;
-        panel2.height = 400;
-        panel2.position.set(900,300);
+        panel2.width = 150;
+        panel2.height = 200;
+        panel2.position.set(1000,50);
 
 
         // Ticker
