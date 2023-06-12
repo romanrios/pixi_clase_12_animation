@@ -1,6 +1,8 @@
-import { Application, Assets, Container, Graphics, Sprite } from 'pixi.js'
+import { Application, Assets } from 'pixi.js'
+import { assets } from './assets';
+import { Scene } from './Scene';
 
-const app = new Application({
+export const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
@@ -8,7 +10,6 @@ const app = new Application({
 	width: 1280,
 	height: 720
 });
-
 
 window.addEventListener("resize", () => {
 	const scaleX = window.innerWidth / app.screen.width;
@@ -32,90 +33,11 @@ window.addEventListener("resize", () => {
 });
 window.dispatchEvent(new Event("resize"));
 
+Assets.addBundle("myAssets", assets);
+Assets.loadBundle(["myAssets"]).then(() => {
 
-
-//-------ASSETS-------------------------------------------
-
-Assets.add("Hat", "./hat.png");
-Assets.add("Mushroom_eyeless", "./mushroom_eyeless.png");
-Assets.add("Mushroom_eyes", "./mushroom_eyes.png");
-Assets.add("Pipe", "./pipe.png");
-
-Assets.load(["Hat", "Mushroom_eyeless", "Mushroom_eyes", "Pipe"]).then(() => {
-
-	const mushroom: Sprite = Sprite.from("Mushroom_eyeless");
-	mushroom.anchor.set(0.5);
-	mushroom.scale.set(0.9, 0.9);
-	app.stage.addChild(mushroom);
-
-	const eyes: Sprite = Sprite.from("Mushroom_eyes");
-	eyes.anchor.set(0.5);
-	eyes.scale.set(0.9, 0.9);
-	eyes.y = 60;
-	app.stage.addChild(eyes);
-
-	const hat: Sprite = Sprite.from("Hat");
-	hat.anchor.set(0.5);
-	hat.y = -130;
-	app.stage.addChild(hat);
-
-
-	//----GRAPHICS EXAMPLE-----------
-	const graphy: Graphics = new Graphics();
-	graphy.beginFill(0x8ad2ff);
-	graphy.lineStyle(280, 0x6ec7ff);
-	graphy.drawCircle(0, 0, 380); 
-	graphy.endFill();
-	app.stage.addChild(graphy);
-	graphy.x = app.screen.width / 2;
-	graphy.y = app.screen.height / 2;
-	graphy.moveTo(700, 550);
-
-
-	const mushroomContainer: Container = new Container();
-	mushroomContainer.addChild(mushroom);
-	mushroomContainer.addChild(hat);
-	mushroomContainer.addChild(eyes);
-	mushroomContainer.x = app.screen.width / 2;
-	mushroomContainer.y = app.screen.height / 2;
-	app.stage.addChild(mushroomContainer);
-
-	const pipe: Sprite = Sprite.from("Pipe");
-	pipe.scale.set(1.25);
-	pipe.angle = 90;
-	pipe.x = 300;
-	pipe.y = 110;
-	app.stage.addChild(pipe);
-
-
-
-
-	//------TICKER-----------------
-	let speed = 0.5;
-	let speed_b = 5;
-	app.ticker.add((delta) => {
-		eyes.x += speed * delta;
-		if (eyes.x < -10 || eyes.x > 10) {
-			speed = -speed;
-		}
-
-		hat.angle += speed;
-
-		mushroomContainer.angle -= 0.5 * delta;
-		mushroomContainer.x += speed_b * delta;
-		if (mushroomContainer.x < 100 || mushroomContainer.x > 1170) {
-			speed_b = -speed_b;
-		}
-
-		graphy.scale.x += 0.005 * speed * delta; 
-		graphy.scale.y += 0.005 * speed * delta;
-	});
-
-
-
-
-
-
+	const myScene = new Scene();
+	app.stage.addChild(myScene);
 
 });
 
