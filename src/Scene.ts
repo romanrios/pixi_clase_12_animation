@@ -13,28 +13,28 @@ export class Scene extends Container {
         graphy.drawCircle(0, 0, 380);
         graphy.endFill();
         this.addChild(graphy);
-        graphy.x = this.width / 2;
-        graphy.y = this.height / 2;
+        graphy.x = app.screen.width / 2;
+        graphy.y = app.screen.height / 2;
         graphy.moveTo(700, 550);
 
         // Class extending from Container
         const mushroomWithHat: MushroomHat = new MushroomHat();
-        mushroomWithHat.position.set(640, 400);
+        mushroomWithHat.position.set(360, 400);
         this.addChild(mushroomWithHat);
 
         // Sprite
         const pipe: Sprite = Sprite.from("Pipe");
         pipe.scale.set(1.25);
-        pipe.angle = 90;
-        pipe.x = 300;
-        pipe.y = 110;
+        pipe.anchor.set(0.5);
+        pipe.x = app.screen.width / 2;
+        pipe.y = 1200;
         this.addChild(pipe);
 
-        // Text
+        // TextStyle
         const styly: TextStyle = new TextStyle({
-            fontFamily: "Montserrat",
+            fontFamily: "KenVector Future",
             fontSize: 50,
-            fontStyle: "oblique",
+            //fontStyle: "oblique",
             fontWeight: 'bold',
             fill: ['#ffffff', '#fab234'], // gradient
             stroke: '#4a1850',
@@ -51,7 +51,7 @@ export class Scene extends Container {
         const texty: Text = new Text('Testing Text and TextStyle', styly);
         // texty.text = "Text change. Do not abuse this resource";
         this.addChild(texty);
-        texty.x = 700;
+        texty.x = 100;
         texty.y = 500;
 
 
@@ -71,37 +71,38 @@ export class Scene extends Container {
         robotAnimated.play();
         robotAnimated.animationSpeed = 0.3;
         robotAnimated.scale.set(1.5);
-        robotAnimated.position.set(900, 0);
-        this.addChild(robotAnimated); 
+        robotAnimated.position.set(100, 0);
+        this.addChild(robotAnimated);
 
 
         // Nice-Slice Plane
         const panel = new NineSlicePlane(
             Texture.from("Panel"),
             40, 40, 40, 40
-            );
+        );
         this.addChild(panel);
         panel.width = 300;
         panel.height = 80;
-        panel.position.set(800,192);
+        panel.position.set(100, 192);
 
 
         const panel2 = new NineSlicePlane(
             Texture.from("Panel"),
-            40, 40, 40, 40
-            );
+            30, 30, 30, 30
+        );
         this.addChild(panel2);
+        panel2.tint = 0x2ef0cc;
         panel2.width = 150;
-        panel2.height = 200;
-        panel2.position.set(700,40);
+        panel2.height = 150;
+        panel2.position.set(550, 20);
 
 
         // Ticker
         let speed_b = 5;
         app.ticker.add((delta) => {
             mushroomWithHat.angle -= 0.5 * delta;
-            mushroomWithHat.x += speed_b * delta;
-            if (mushroomWithHat.x < 100 || mushroomWithHat.x > 1170) {
+            mushroomWithHat.y += speed_b * delta;
+            if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
                 speed_b = -speed_b;
             }
             graphy.scale.x += 0.005 * speed_b * delta;

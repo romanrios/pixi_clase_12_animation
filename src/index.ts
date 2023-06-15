@@ -1,14 +1,14 @@
 import { Application, Assets } from 'pixi.js'
 import { assets } from './assets';
-import { Scene } from './Scene';
+import { SceneCompletedUI } from './SceneCompletedUI';
 
 export const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
 	backgroundColor: '#54C3FF',
-	width: 1280,
-	height: 720
+	width: 720,
+	height: 1280
 });
 
 window.addEventListener("resize", () => {
@@ -37,7 +37,7 @@ window.dispatchEvent(new Event("resize"));
 Assets.addBundle("myAssets", assets);
 Assets.loadBundle(["myAssets"]).then(() => {
 
-	const myScene = new Scene();
+	const myScene = new SceneCompletedUI();
 	app.stage.addChild(myScene);
 
 });
