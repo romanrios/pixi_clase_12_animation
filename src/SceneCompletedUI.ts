@@ -1,10 +1,14 @@
 import { Container, NineSlicePlane, TextStyle, Texture, Text, Sprite } from "pixi.js";
 import { app } from ".";
+import { Button } from "./Button";
 
 
 export class SceneCompletedUI extends Container {
     constructor() {
         super();
+
+        // PARA USAR ZINDEX
+        // this.sortableChildren = true
 
         const glow: Sprite = Sprite.from("Glow");
         glow.anchor.set(0.5);
@@ -36,59 +40,26 @@ export class SceneCompletedUI extends Container {
         panelTitle.tint = 0x00C18C;
         this.addChild(panelTitle);
 
-        const panelHome = new NineSlicePlane(
-            Texture.from("Panel"),
-            30, 30, 30, 30
-        );
-        panelHome.width = 120;
-        panelHome.pivot.set(panelHome.width / 2);
-        panelHome.height = 120;
-        panelHome.x = app.screen.width / 2 - 140;
-        panelHome.y = 880;
-        panelHome.tint = 0x00A3A8;
-        this.addChild(panelHome);
-        const threelines = Sprite.from("ThreeLines")
-        threelines.pivot.set(threelines.width/2);
-        threelines.scale.set(0.7);
-        threelines.position.set(panelHome.x,panelHome.y);
-        this.addChild(threelines); 
 
-        const panelRetry = new NineSlicePlane(
-            Texture.from("Panel"),
-            30, 30, 30, 30
-        );
-        panelRetry.width = 120;
-        panelRetry.pivot.set(panelRetry.width / 2);
-        panelRetry.height = 120;
-        panelRetry.x = app.screen.width / 2;
-        panelRetry.y = 880;
-        panelRetry.tint = 0xFFC931;
-        this.addChild(panelRetry);
-        const retry = Sprite.from("Retry")
-        retry.pivot.set(retry.width/2);
-        retry.scale.set(0.7);
-        retry.position.set(panelRetry.x,panelRetry.y);
-        this.addChild(retry); 
+        // Class extending from Container
+        const buttonHome: Button = new Button(0x00A3A8, "ThreeLines");
+        buttonHome.x = app.screen.width / 2 - 140;
+        buttonHome.y = 880;
+        this.addChild(buttonHome);
 
-        const panelNext = new NineSlicePlane(
-            Texture.from("Panel"),
-            30, 30, 30, 30
-        );
-        panelNext.width = 120;
-        panelNext.pivot.set(panelNext.width / 2);
-        panelNext.height = 120;
-        panelNext.x = app.screen.width / 2 + 140;
-        panelNext.y = 880;
-        panelNext.tint = 0x00C18C;
-        this.addChild(panelNext);
-        const next = Sprite.from("Next")
-        next.pivot.set(next.width/2);
-        next.scale.set(0.7);
-        next.position.set(panelNext.x,panelNext.y);
-        this.addChild(next); 
+        const buttonRetry: Button = new Button(0xFFC931, "Retry");
+        buttonRetry.x = app.screen.width / 2;
+        buttonRetry.y = 880;
+        this.addChild(buttonRetry);
+
+        const buttonNext: Button = new Button(0x00C18C,"Next");
+        buttonNext.x = app.screen.width / 2 + 140;
+        buttonNext.y = 880
+        this.addChild(buttonNext);
 
 
-        const styly2: TextStyle = new TextStyle({
+        
+        const styly: TextStyle = new TextStyle({
             fontFamily: "Square",
             fontSize: 60,
             fill: '#ffffff',
@@ -96,7 +67,7 @@ export class SceneCompletedUI extends Container {
             dropShadowColor: '#007555',
             align: "center"
         });
-        const titleText: Text = new Text('NIVEL\nCOMPLETADO', styly2);
+        const titleText: Text = new Text('NIVEL\nCOMPLETADO', styly);
         titleText.anchor.set(0.5);
         titleText.x = app.screen.width / 2;
         titleText.y = 325;
@@ -107,16 +78,14 @@ export class SceneCompletedUI extends Container {
         star1.x = app.screen.width / 2 - 130;
         star1.y = 520;
         star1.angle = -10;
-        this.addChild(star1);        
-
+        this.addChild(star1);   
 
         const star2 = Sprite.from("Star");
         star2.pivot.set(star2.width / 2);
         star2.scale.set(1.1);
         star2.x = app.screen.width / 2;
         star2.y = 490;
-        this.addChild(star2);        
-
+        this.addChild(star2);  
 
         const star3 = Sprite.from("Star");
         star3.pivot.set(star3.width / 2);

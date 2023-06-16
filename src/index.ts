@@ -1,6 +1,9 @@
-import { Application, Assets } from 'pixi.js'
+import { Application, Assets} from 'pixi.js'
 import { assets } from './assets';
 import { SceneCompletedUI } from './SceneCompletedUI';
+
+// ACTIVAR PARA PIXEL ART
+// BaseTexture.defaultOptions.scaleMode = SCALE_MODES.NEAREST;
 
 export const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
