@@ -15,7 +15,8 @@ export const assets = {
     Square: "./Square.ttf",
     Glow: "./glow.png",
     Star: "./star.svg",
-    ThreeLines: "3lines.svg",
-    Next: "next.svg",
-    Retry: "retry.svg"
+    ThreeLines: "./3lines.svg",
+    Next: "./next.svg",
+    Retry: "./retry.svg",
+    Fullscreen: "./fullscreen.svg"
 };

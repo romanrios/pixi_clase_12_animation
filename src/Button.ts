@@ -13,11 +13,10 @@ export class Button extends Container {
         button.tint = tint;
         this.addChild(button);
         const buttonContent = Sprite.from(buttonSprite)
-        buttonContent.pivot.set(buttonContent.width/2);
+        buttonContent.pivot.set(buttonContent.width / 2);
         buttonContent.scale.set(0.7);
-        buttonContent.position.set(button.x,button.y);
-        this.addChild(buttonContent); 
-
+        buttonContent.position.set(button.x, button.y);
+        this.addChild(buttonContent);
 
     }
 };

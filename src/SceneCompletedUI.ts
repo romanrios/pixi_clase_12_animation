@@ -52,13 +52,17 @@ export class SceneCompletedUI extends Container {
         buttonRetry.y = 880;
         this.addChild(buttonRetry);
 
-        const buttonNext: Button = new Button(0x00C18C,"Next");
+        const buttonNext: Button = new Button(0x00C18C, "Next");
         buttonNext.x = app.screen.width / 2 + 140;
         buttonNext.y = 880
         this.addChild(buttonNext);
 
 
-        
+
+
+
+
+
         const styly: TextStyle = new TextStyle({
             fontFamily: "Square",
             fontSize: 60,
@@ -78,21 +82,21 @@ export class SceneCompletedUI extends Container {
         star1.x = app.screen.width / 2 - 130;
         star1.y = 520;
         star1.angle = -10;
-        this.addChild(star1);   
+        this.addChild(star1);
 
         const star2 = Sprite.from("Star");
         star2.pivot.set(star2.width / 2);
         star2.scale.set(1.1);
         star2.x = app.screen.width / 2;
         star2.y = 490;
-        this.addChild(star2);  
+        this.addChild(star2);
 
         const star3 = Sprite.from("Star");
         star3.pivot.set(star3.width / 2);
         star3.x = app.screen.width / 2 + 130;
         star3.y = 520;
         star3.angle = 10;
-        this.addChild(star3);        
+        this.addChild(star3);
 
         const brownText: TextStyle = new TextStyle({
             fontFamily: "Square",
@@ -114,6 +118,20 @@ export class SceneCompletedUI extends Container {
 
 
 
+        // Fullscreen Button
+        const buttonFullscreen: Button = new Button(0x00A3A8, "Fullscreen");
+        buttonFullscreen.x = 630;
+        buttonFullscreen.y = 1190
+        this.addChild(buttonFullscreen);
+        buttonFullscreen.interactive = true;
+        buttonFullscreen.onpointerdown = function () {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen()
+            };
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
 
 
         // Ticker
