@@ -1,5 +1,5 @@
 import { Container, Sprite } from "pixi.js";
-import { app } from "./index"
+import { app } from "..";
 
 export class MushroomHat extends Container {
     constructor() {

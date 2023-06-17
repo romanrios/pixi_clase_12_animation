@@ -1,6 +1,9 @@
-import { Application, Assets} from 'pixi.js'
-import { assets } from './assets';
-import { SceneCompletedUI } from './SceneCompletedUI';
+import { Application, Assets } from 'pixi.js'
+import { manifest } from './assets';
+import { SceneCompletedUI } from './scenes/SceneCompletedUI';
+
+
+
 
 // ACTIVAR PARA PIXEL ART
 // BaseTexture.defaultOptions.scaleMode = SCALE_MODES.NEAREST;
@@ -13,6 +16,8 @@ export const app = new Application({
 	width: 720,
 	height: 1280
 });
+
+(globalThis as any).__PIXI_APP__ = app; // eslint-disable-line ***PIXI DEV TOOLS***
 
 window.addEventListener("resize", () => {
 	const scaleX = window.innerWidth / app.screen.width;
@@ -37,12 +42,21 @@ window.addEventListener("resize", () => {
 
 window.dispatchEvent(new Event("resize"));
 
-Assets.addBundle("myAssets", assets);
-Assets.loadBundle(["myAssets"]).then(() => {
 
-	const myScene = new SceneCompletedUI();
-	app.stage.addChild(myScene);
+// importen el objeto manifest de su otro archivo
+// Assets.init tiene que suceder antes de cualquier otro uso de la clase Assets!
+Assets.init({ manifest: manifest }).then(() => {
 
-});
+	// Obtenemos todos los nombres de los bundles que tengamos en nuestro manifest
+	const bundleIds = manifest.bundles.map(bundle => bundle.name);
 
+	// descargamos todos los bundles
+	Assets.loadBundle(bundleIds).then(() => {
+		// recien aca tenemos todos los assets listos. Podemos abrir nuestra escena
 
+		const myScene = new SceneCompletedUI();
+		app.stage.addChild(myScene);
+
+	});
+
+})

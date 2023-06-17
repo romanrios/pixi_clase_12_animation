@@ -1,6 +1,6 @@
 import { Container, Graphics, Sprite, TextStyle, Text, AnimatedSprite, Texture, NineSlicePlane } from "pixi.js";
-import { MushroomHat } from "./MushroomHat";
-import { app } from ".";
+import { app } from "..";
+//import { MushroomHat } from "../game/MushroomHat";
 
 export class Scene extends Container {
     constructor() {
@@ -17,10 +17,10 @@ export class Scene extends Container {
         graphy.y = app.screen.height / 2;
         graphy.moveTo(700, 550);
 
-        // Class extending from Container
-        const mushroomWithHat: MushroomHat = new MushroomHat();
-        mushroomWithHat.position.set(360, 400);
-        this.addChild(mushroomWithHat);
+        // // Class extending from Container
+        // const mushroomWithHat: MushroomHat = new MushroomHat();
+        // mushroomWithHat.position.set(360, 400);
+        // this.addChild(mushroomWithHat);
 
         // Sprite
         const pipe: Sprite = Sprite.from("Pipe");
@@ -98,16 +98,16 @@ export class Scene extends Container {
 
 
         // Ticker
-        let speed_b = 5;
-        app.ticker.add((delta) => {
-            mushroomWithHat.angle -= 0.5 * delta;
-            mushroomWithHat.y += speed_b * delta;
-            if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
-                speed_b = -speed_b;
-            }
-            graphy.scale.x += 0.005 * speed_b * delta;
-            graphy.scale.y += 0.005 * speed_b * delta;
-        });
+        // let speed_b = 5;
+        // app.ticker.add((delta) => {
+        //     mushroomWithHat.angle -= 0.5 * delta;
+        //     mushroomWithHat.y += speed_b * delta;
+        //     if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
+        //         speed_b = -speed_b;
+        //     }
+        //     graphy.scale.x += 0.005 * speed_b * delta;
+        //     graphy.scale.y += 0.005 * speed_b * delta;
+        // });
 
     }
 }

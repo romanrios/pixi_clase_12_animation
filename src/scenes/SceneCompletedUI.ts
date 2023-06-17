@@ -1,6 +1,6 @@
 import { Container, NineSlicePlane, TextStyle, Texture, Text, Sprite } from "pixi.js";
-import { app } from ".";
-import { Button } from "./Button";
+import { app } from "..";
+import { Button } from "../game/Button";
 
 
 export class SceneCompletedUI extends Container {
@@ -46,16 +46,26 @@ export class SceneCompletedUI extends Container {
         buttonHome.x = app.screen.width / 2 - 140;
         buttonHome.y = 880;
         this.addChild(buttonHome);
+        buttonHome.onpointerup = function(){
+            textMonedas.text = "MONEDAS   470";
+        }
 
         const buttonRetry: Button = new Button(0xFFC931, "Retry");
         buttonRetry.x = app.screen.width / 2;
         buttonRetry.y = 880;
         this.addChild(buttonRetry);
+        buttonRetry.onpointerup = function(){
+            textMonedas.text = "TOCASTE RETRY";
+        }
 
         const buttonNext: Button = new Button(0x00C18C, "Next");
         buttonNext.x = app.screen.width / 2 + 140;
         buttonNext.y = 880
         this.addChild(buttonNext);
+        buttonNext.onpointerup = function(){
+            textMonedas.text = "TOCASTE NEXT";
+        }
+
 
 
 
