@@ -23,20 +23,33 @@ export class Button extends Container {
         this.interactive = true;
 
         this.onmouseover = function(){
+            console.log("onmouseover")
             button.tint -= 0XFFFFFF * 0.01;            
         }
-        this.onmouseout = function(){
+        this.onmouseout  = function(){
+            console.log("onmouseout")
             button.tint += 0xFFFFFF * 0.01;            
+        }
+        this.onmouseup = function(){
+            console.log("onmouseup")
+            this.scale.set(1)
         }
 
         this.onpointerdown = function(){
+            console.log("onpointerdown")
             this.scale.set(0.9)
         }
         this.onpointerup = function(){
+            console.log("onpointerup")
             this.scale.set(1)
             //button.tint += 100;
         }
         this.onpointerout = function(){
+            console.log("onpointerout")
+            this.scale.set(1)
+        }
+        this.ontouchend = function(){
+            console.log("ontouchend")
             this.scale.set(1)
         }
 

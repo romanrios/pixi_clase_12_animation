@@ -46,7 +46,7 @@ export class SceneCompletedUI extends Container {
         buttonHome.x = app.screen.width / 2 - 140;
         buttonHome.y = 880;
         this.addChild(buttonHome);
-        buttonHome.onpointerup = function(){
+        buttonHome.onpointerup = function () {
             textMonedas.text = "MONEDAS   470";
         }
 
@@ -54,7 +54,7 @@ export class SceneCompletedUI extends Container {
         buttonRetry.x = app.screen.width / 2;
         buttonRetry.y = 880;
         this.addChild(buttonRetry);
-        buttonRetry.onpointerup = function(){
+        buttonRetry.onpointerup = function () {
             textMonedas.text = "TOCASTE RETRY";
         }
 
@@ -62,7 +62,7 @@ export class SceneCompletedUI extends Container {
         buttonNext.x = app.screen.width / 2 + 140;
         buttonNext.y = 880
         this.addChild(buttonNext);
-        buttonNext.onpointerup = function(){
+        buttonNext.onpointerup = function () {
             textMonedas.text = "TOCASTE NEXT";
         }
 
@@ -135,13 +135,16 @@ export class SceneCompletedUI extends Container {
         this.addChild(buttonFullscreen);
         buttonFullscreen.interactive = true;
         buttonFullscreen.onpointerdown = function () {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen()
-            };
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
             }
-        }
+        };
 
 
         // Ticker
