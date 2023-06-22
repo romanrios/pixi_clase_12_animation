@@ -20,10 +20,10 @@ export class ButtonTest extends Container {
         this.addChild(this.spr);
 
         this.spr.eventMode = 'static';
-        this.spr.on("pointerdown",this.onPointerDown, this)
-        this.spr.on("pointerup",this.onPointerUp, this)
-        this.spr.on("pointerover",this.onPointerOver, this)
-        this.spr.on("pointerout",this.onPointerOut, this)
+        this.spr.on("pointerdown",this.onPointerDown, this);
+        this.spr.on("pointerup",this.onPointerUp, this);
+        this.spr.on("pointerover",this.onPointerOver, this);
+        this.spr.on("pointerout",this.onPointerOut, this);
 
     }
 

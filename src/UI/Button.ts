@@ -4,8 +4,6 @@ export class Button extends Container {
     constructor(tint: number, buttonSprite: SpriteSource) {
         super();
 
-
-
         
         const button = new NineSlicePlane(
             Texture.from("Panel"),
@@ -27,37 +25,23 @@ export class Button extends Container {
         this.cursor = 'pointer';
 
         this.onmouseover = () => {
-            console.log("onmouseover");
             button.tint = button.tint as number + 10000;
         }
+
         this.onmouseout  = () => {
-            console.log("onmouseout");
             button.tint = button.tint as number - 10000;
         }
-        this.onmouseup = () => {
-            console.log("onmouseup")
-            this.scale.set(1)
+
+        this.onpointerout = () => {
+            this.scale.set(1);
         }
 
         this.onpointerdown = () => {
-            console.log("onpointerdown")
-            this.scale.set(0.9)
+            this.scale.set(0.9);
         }
         this.onpointerup = () => {
-            console.log("onpointerup")
-            this.scale.set(1)
-            //button.tint += 100;
+            this.scale.set(1);
         }
-        this.onpointerout = () => {
-            console.log("onpointerout")
-            this.scale.set(1)
-        }
-        this.ontouchend = () => {
-            console.log("ontouchend")
-            this.scale.set(1)
-        }
-
-
 
     }
 };
