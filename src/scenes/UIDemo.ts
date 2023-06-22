@@ -155,7 +155,7 @@ export class SceneCompletedUI extends Container {
         this.addChild(this.testButton);
 
         // Text Last Key Pressed
-        this.lastKeyPressed = new Text("Aprieta la letra B...b", { fontSize: 48 });
+        this.lastKeyPressed = new Text("Presiona la letra B", { fontSize: 48 });
         this.lastKeyPressed.anchor.set(0.5);
         this.lastKeyPressed.x = app.screen.width / 2;
         this.lastKeyPressed.y = 1040;
@@ -179,7 +179,7 @@ export class SceneCompletedUI extends Container {
 
     private onKeyB() : void {
         console.log("apreté la B", this);
-        this.lastKeyPressed.text = "Apretaste la letra B"
+        this.lastKeyPressed.text = "Presionaste la letra B"
     }
 
     private onKeyBUp() : void {
