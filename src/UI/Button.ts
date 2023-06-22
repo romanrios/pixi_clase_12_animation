@@ -1,9 +1,12 @@
 import { Container, NineSlicePlane, Sprite, SpriteSource, Texture } from "pixi.js";
 
 export class Button extends Container {
-    tint: any;
     constructor(tint: number, buttonSprite: SpriteSource) {
         super();
+
+
+
+        
         const button = new NineSlicePlane(
             Texture.from("Panel"),
             30, 30, 30, 30
@@ -20,35 +23,36 @@ export class Button extends Container {
         buttonContent.position.set(button.x, button.y);
         this.addChild(buttonContent);
 
-        this.interactive = true;
+        this.eventMode = 'static'; // replaces interactive true
+        this.cursor = 'pointer';
 
-        this.onmouseover = function(){
-            console.log("onmouseover")
-            button.tint -= 0XFFFFFF * 0.01;            
+        this.onmouseover = () => {
+            console.log("onmouseover");
+            button.tint = button.tint as number + 10000;
         }
-        this.onmouseout  = function(){
-            console.log("onmouseout")
-            button.tint += 0xFFFFFF * 0.01;            
+        this.onmouseout  = () => {
+            console.log("onmouseout");
+            button.tint = button.tint as number - 10000;
         }
-        this.onmouseup = function(){
+        this.onmouseup = () => {
             console.log("onmouseup")
             this.scale.set(1)
         }
 
-        this.onpointerdown = function(){
+        this.onpointerdown = () => {
             console.log("onpointerdown")
             this.scale.set(0.9)
         }
-        this.onpointerup = function(){
+        this.onpointerup = () => {
             console.log("onpointerup")
             this.scale.set(1)
             //button.tint += 100;
         }
-        this.onpointerout = function(){
+        this.onpointerout = () => {
             console.log("onpointerout")
             this.scale.set(1)
         }
-        this.ontouchend = function(){
+        this.ontouchend = () => {
             console.log("ontouchend")
             this.scale.set(1)
         }

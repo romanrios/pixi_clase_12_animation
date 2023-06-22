@@ -1,9 +1,14 @@
 import { Container, NineSlicePlane, TextStyle, Texture, Text, Sprite } from "pixi.js";
 import { app } from "..";
-import { Button } from "../game/Button";
-
+import { Button } from "../UI/Button";
+import { ButtonTest } from "../UI/ButtonTest";
+import { Keyboard } from "../utils/Keyboard";
 
 export class SceneCompletedUI extends Container {
+
+    private testButton: ButtonTest;
+    private lastKeyPressed: Text;
+
     constructor() {
         super();
 
@@ -14,7 +19,9 @@ export class SceneCompletedUI extends Container {
         glow.anchor.set(0.5);
         glow.x = app.screen.width / 2;
         glow.y = 300;
-        this.addChild(glow)
+        this.addChild(glow);
+        glow.eventMode = 'static';
+
 
         const panelFondo = new NineSlicePlane(
             Texture.from("Panel"),
@@ -39,38 +46,6 @@ export class SceneCompletedUI extends Container {
         panelTitle.y = 250;
         panelTitle.tint = 0x00C18C;
         this.addChild(panelTitle);
-
-
-        // Class extending from Container
-        const buttonHome: Button = new Button(0x00A3A8, "ThreeLines");
-        buttonHome.x = app.screen.width / 2 - 140;
-        buttonHome.y = 880;
-        this.addChild(buttonHome);
-        buttonHome.onpointerup = function () {
-            textMonedas.text = "MONEDAS   470";
-        }
-
-        const buttonRetry: Button = new Button(0xFFC931, "Retry");
-        buttonRetry.x = app.screen.width / 2;
-        buttonRetry.y = 880;
-        this.addChild(buttonRetry);
-        buttonRetry.onpointerup = function () {
-            textMonedas.text = "TOCASTE RETRY";
-        }
-
-        const buttonNext: Button = new Button(0x00C18C, "Next");
-        buttonNext.x = app.screen.width / 2 + 140;
-        buttonNext.y = 880
-        this.addChild(buttonNext);
-        buttonNext.onpointerup = function () {
-            textMonedas.text = "TOCASTE NEXT";
-        }
-
-
-
-
-
-
 
 
         const styly: TextStyle = new TextStyle({
@@ -119,7 +94,6 @@ export class SceneCompletedUI extends Container {
         textMonedas.y = 650;
         this.addChild(textMonedas);
 
-
         const textPuntaje: Text = new Text(' PUNTAJE   12500 ', brownText);
         textPuntaje.anchor.set(0.5);
         textPuntaje.x = app.screen.width / 2;
@@ -127,14 +101,38 @@ export class SceneCompletedUI extends Container {
         this.addChild(textPuntaje);
 
 
+        // UI Buttons
+        const buttonHome: Button = new Button(0x00A3A8, "ThreeLines");
+        buttonHome.x = app.screen.width / 2 - 140;
+        buttonHome.y = 880;
+        this.addChild(buttonHome);
+        buttonHome.onpointertap = () => {
+            textMonedas.text = "MONEDAS   470";
+        }
+
+        const buttonRetry: Button = new Button(0xFFC931, "Retry");
+        buttonRetry.x = app.screen.width / 2;
+        buttonRetry.y = 880;
+        this.addChild(buttonRetry);
+        buttonRetry.onpointertap = () => {
+            textMonedas.text = "TOCASTE RETRY";
+        }
+
+        const buttonNext: Button = new Button(0x00C18C, "Next");
+        buttonNext.x = app.screen.width / 2 + 140;
+        buttonNext.y = 880
+        this.addChild(buttonNext);
+        buttonNext.onpointertap = () => {
+            textMonedas.text = "TOCASTE NEXT";
+        }
 
         // Fullscreen Button
         const buttonFullscreen: Button = new Button(0x00A3A8, "Fullscreen");
         buttonFullscreen.x = 630;
         buttonFullscreen.y = 1190
         this.addChild(buttonFullscreen);
-        buttonFullscreen.interactive = true;
-        buttonFullscreen.onpointerdown = function () {
+        buttonFullscreen.eventMode = 'static';
+        buttonFullscreen.onpointerdown = () => {
             if (!document.fullscreenElement) {
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
@@ -146,12 +144,61 @@ export class SceneCompletedUI extends Container {
             }
         };
 
+        // Test Button        
+        this.testButton = new ButtonTest(
+            Texture.from("GreenButtonDefault"),
+            Texture.from("GreenButtonDown"),
+            Texture.from("GreenButtonOver"),
+        );
+        this.testButton.buttonEvents.on("buttonClick", this.onButtonClick, this);
+        this.testButton.position.set(120, 1170);
+        this.addChild(this.testButton);
+
+        // Text Last Key Pressed
+        this.lastKeyPressed = new Text("Aprieta la letra B...b", { fontSize: 48 });
+        this.lastKeyPressed.anchor.set(0.5);
+        this.lastKeyPressed.x = app.screen.width / 2;
+        this.lastKeyPressed.y = 1040;
+        this.addChild(this.lastKeyPressed)
+
+        // Keyboard
+
+        // document.addEventListener("keydown", this.onKeyDown.bind(this))
+        // document.addEventListener("keyup", this.onKeyUp.bind(this))
+
+        Keyboard.down.on("KeyB",this.onKeyB, this);
+        Keyboard.up.on("KeyB",this.onKeyBUp, this);
+
 
         // Ticker
         app.ticker.add((delta) => {
             glow.angle -= 0.7 * delta;
         });
 
-
     }
-}
+
+    private onKeyB() : void {
+        console.log("apreté la B", this);
+        this.lastKeyPressed.text = "Apretaste la letra B"
+    }
+
+    private onKeyBUp() : void {
+        this.lastKeyPressed.text = "Soltaste la letra B"
+        console.log("solté la B", this);
+    }
+
+    // private onKeyDown(e: KeyboardEvent): void {
+    //     console.log("key pressed!", e.code);
+    //     this.lastKeyPressed.text = e.code;
+    // }
+
+    // private onKeyUp(e: KeyboardEvent): void {
+    //     console.log("key released!", e.code);
+    // }
+
+    private onButtonClick(): void {
+        console.log("my new button clicked!", this);
+    }
+
+
+};

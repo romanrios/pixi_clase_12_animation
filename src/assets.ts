@@ -31,7 +31,10 @@ export const manifest: ResolverManifest = {
                 ThreeLines: "./3lines.svg",
                 Next: "./next.svg",
                 Retry: "./retry.svg",
-                Fullscreen: "./fullscreen.svg"
+                Fullscreen: "./fullscreen.svg",
+                GreenButtonDefault: "./green_button_default.png",
+                GreenButtonOver: "./green_button_over.png",
+                GreenButtonDown: "./green_button_down.png"
             }
         },
     ]

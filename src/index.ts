@@ -1,12 +1,14 @@
 import { Application, Assets } from 'pixi.js'
 import { manifest } from './assets';
-import { SceneCompletedUI } from './scenes/SceneCompletedUI';
+import { SceneCompletedUI } from './scenes/UIDemo';
+import { Keyboard } from './utils/Keyboard';
 
 
 
 
-// ACTIVAR PARA PIXEL ART
+// Scale mode for all textures, will retain pixelation
 // BaseTexture.defaultOptions.scaleMode = SCALE_MODES.NEAREST;
+
 
 export const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -16,6 +18,10 @@ export const app = new Application({
 	width: 720,
 	height: 1280
 });
+
+
+Keyboard.initialize();
+
 
 (globalThis as any).__PIXI_APP__ = app; // eslint-disable-line ***PIXI DEV TOOLS***
 
