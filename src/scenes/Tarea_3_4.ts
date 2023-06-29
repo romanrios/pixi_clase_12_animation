@@ -4,7 +4,7 @@ import { Button } from "../UI/Button";
 import { ButtonTest } from "../UI/ButtonTest";
 import { Keyboard } from "../utils/Keyboard";
 
-export class SceneCompletedUI extends Container {
+export class Tarea_3_4 extends Container {
 
     private testButton: ButtonTest;
     private lastKeyPressed: Text;

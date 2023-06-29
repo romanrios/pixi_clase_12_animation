@@ -39,6 +39,7 @@ export class Button extends Container {
         this.onpointerdown = () => {
             this.scale.set(0.9);
         }
+        
         this.onpointerup = () => {
             this.scale.set(1);
         }

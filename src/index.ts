@@ -1,14 +1,11 @@
+import '@pixi/gif';
 import { Application, Assets } from 'pixi.js'
 import { manifest } from './assets';
-import { SceneCompletedUI } from './scenes/UIDemo';
 import { Keyboard } from './utils/Keyboard';
-
-
-
+import { MainScene } from './scenes/MainScene';
 
 // Scale mode for all textures, will retain pixelation
 // BaseTexture.defaultOptions.scaleMode = SCALE_MODES.NEAREST;
-
 
 export const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -19,9 +16,7 @@ export const app = new Application({
 	height: 1280
 });
 
-
 Keyboard.initialize();
-
 
 (globalThis as any).__PIXI_APP__ = app; // eslint-disable-line ***PIXI DEV TOOLS***
 
@@ -48,21 +43,11 @@ window.addEventListener("resize", () => {
 
 window.dispatchEvent(new Event("resize"));
 
-
-// importen el objeto manifest de su otro archivo
-// Assets.init tiene que suceder antes de cualquier otro uso de la clase Assets!
 Assets.init({ manifest: manifest }).then(() => {
-
-	// Obtenemos todos los nombres de los bundles que tengamos en nuestro manifest
-	const bundleIds = manifest.bundles.map(bundle => bundle.name);
-
-	// descargamos todos los bundles
-	Assets.loadBundle(bundleIds).then(() => {
-		// recien aca tenemos todos los assets listos. Podemos abrir nuestra escena
-
-		const myScene = new SceneCompletedUI();
+	// to load all bundles
+	// const bundleIds = manifest.bundles.map(bundle => bundle.name);
+	Assets.loadBundle("mainScene").then(() => {
+		const myScene = new MainScene();
 		app.stage.addChild(myScene);
-
 	});
-
 })

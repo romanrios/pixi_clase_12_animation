@@ -5,7 +5,7 @@ export class ButtonTest extends Container {
     private def: Texture;
     private down: Texture;
     private over: Texture;
-    private spr:Sprite;
+    private spr: Sprite;
 
     public readonly buttonEvents: utils.EventEmitter = new utils.EventEmitter();
 
@@ -20,27 +20,27 @@ export class ButtonTest extends Container {
         this.addChild(this.spr);
 
         this.spr.eventMode = 'static';
-        this.spr.on("pointerdown",this.onPointerDown, this);
-        this.spr.on("pointerup",this.onPointerUp, this);
-        this.spr.on("pointerover",this.onPointerOver, this);
-        this.spr.on("pointerout",this.onPointerOut, this);
+        this.spr.on("pointerdown", this.onPointerDown, this);
+        this.spr.on("pointerup", this.onPointerUp, this);
+        this.spr.on("pointerover", this.onPointerOver, this);
+        this.spr.on("pointerout", this.onPointerOut, this);
 
     }
 
-    private onPointerDown():void {
+    private onPointerDown(): void {
         this.spr.texture = this.down;
     }
 
-    private onPointerUp():void {
+    private onPointerUp(): void {
         this.buttonEvents.emit("buttonClick");
         this.spr.texture = this.def;
     }
 
-    private onPointerOver():void {
+    private onPointerOver(): void {
         this.spr.texture = this.over;
     }
 
-    private onPointerOut():void {
+    private onPointerOut(): void {
         this.spr.texture = this.def;
     }
 

@@ -1,8 +1,9 @@
 import { Container, Graphics, Sprite, TextStyle, Text, AnimatedSprite, Texture, NineSlicePlane } from "pixi.js";
 import { app } from "..";
+import { MushroomHat } from "../game/MushroomHat";
 //import { MushroomHat } from "../game/MushroomHat";
 
-export class Scene extends Container {
+export class Tarea_1_2 extends Container {
     constructor() {
         super();
 
@@ -18,9 +19,9 @@ export class Scene extends Container {
         graphy.moveTo(700, 550);
 
         // // Class extending from Container
-        // const mushroomWithHat: MushroomHat = new MushroomHat();
-        // mushroomWithHat.position.set(360, 400);
-        // this.addChild(mushroomWithHat);
+        const mushroomWithHat: MushroomHat = new MushroomHat();
+        mushroomWithHat.position.set(360, 400);
+        this.addChild(mushroomWithHat);
 
         // Sprite
         const pipe: Sprite = Sprite.from("Pipe");
@@ -52,7 +53,7 @@ export class Scene extends Container {
         // texty.text = "Text change. Do not abuse this resource";
         this.addChild(texty);
         texty.x = 100;
-        texty.y = 500;
+        texty.y = 520;
 
 
         // Animated Sprite
@@ -71,7 +72,7 @@ export class Scene extends Container {
         robotAnimated.play();
         robotAnimated.animationSpeed = 0.3;
         robotAnimated.scale.set(1.5);
-        robotAnimated.position.set(100, 0);
+        robotAnimated.position.set(100, 170);
         this.addChild(robotAnimated);
 
 
@@ -83,7 +84,7 @@ export class Scene extends Container {
         this.addChild(panel);
         panel.width = 300;
         panel.height = 80;
-        panel.position.set(100, 192);
+        panel.position.set(100, 362);
 
 
         const panel2 = new NineSlicePlane(
@@ -94,20 +95,20 @@ export class Scene extends Container {
         panel2.tint = 0x2ef0cc;
         panel2.width = 150;
         panel2.height = 150;
-        panel2.position.set(550, 20);
+        panel2.position.set(520, 300);
 
 
-        // Ticker
-        // let speed_b = 5;
-        // app.ticker.add((delta) => {
-        //     mushroomWithHat.angle -= 0.5 * delta;
-        //     mushroomWithHat.y += speed_b * delta;
-        //     if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
-        //         speed_b = -speed_b;
-        //     }
-        //     graphy.scale.x += 0.005 * speed_b * delta;
-        //     graphy.scale.y += 0.005 * speed_b * delta;
-        // });
+        //Ticker
+        let speed_b = 5;
+        app.ticker.add((delta) => {
+            mushroomWithHat.angle -= 0.5 * delta;
+            mushroomWithHat.y += speed_b * delta;
+            if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
+                speed_b = -speed_b;
+            }
+            graphy.scale.x += 0.005 * speed_b * delta;
+            graphy.scale.y += 0.005 * speed_b * delta;
+        });
 
     }
 }
