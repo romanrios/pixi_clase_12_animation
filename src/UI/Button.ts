@@ -44,5 +44,9 @@ export class Button extends Container {
             this.scale.set(1);
         }
 
+        this.onpointerupoutside = () => {
+            this.scale.set(1);
+        }
+
     }
 };

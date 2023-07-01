@@ -1,12 +1,13 @@
 import { Container, Assets, TextStyle, Text } from "pixi.js";
 import { SongButton } from "../UI/SongButton";
 import { app } from "..";
-import { Tarea_1_2 } from "./Tarea_1_2";
-import { Tarea_3_4 } from "./Tarea_3_4";
+import { Clases_1_2 } from "./Clases_1_2";
+import { Clases_3_4 } from "./Clases_3_4";
 import { SongGame } from "./SongGame";
 import { sound } from "@pixi/sound";
+import { Clase_5_TickerScene } from "./Clase_5_TickerScene";
 
-export class MainScene extends Container {
+export class MainScene extends Container{
 
     constructor() {
         super();
@@ -22,9 +23,16 @@ export class MainScene extends Container {
         texty.position.set(app.screen.width/2,150);
         this.addChild(texty);
 
-        const changeScene = (scene: typeof MainScene, bundle: string) => {
+        const changeScene = (scene: any, bundle: string) => {
+
+            if (this.children.length > 0) {
+                const currentScene = this.children[0];
+                currentScene.destroy();
+                console.log(this.children.length)
+            }
+
             this.removeChildren();
-            Assets.loadBundle(bundle).then(() => {
+                Assets.loadBundle(bundle).then(() => {
                 const myScene = new scene();
                 this.addChild(myScene);
                 myScene.addChild(button0);
@@ -47,14 +55,14 @@ export class MainScene extends Container {
         const button1 = new SongButton("Clases 1 y 2");
         button1.position.set(app.screen.width / 2, 350)
         button1.onpointerup = () => {
-            changeScene(Tarea_1_2, "tarea_1_2")
+            changeScene(Clases_1_2, "clases_1_2")
         };
         this.addChild(button1);
 
         const button2: SongButton = new SongButton("Clases 3 y 4");
         button2.position.set(app.screen.width / 2, button1.y + 150)
         button2.onpointerup = () => {
-            changeScene(Tarea_3_4, "tarea_3_4")
+            changeScene(Clases_3_4, "clases_3_4")
         };
         this.addChild(button2);
 
@@ -67,11 +75,14 @@ export class MainScene extends Container {
 
         const button4: SongButton = new SongButton("Clase 5");
         button4.position.set(app.screen.width / 2, button3.y + 150)
-        button4.alpha=0.3
+        button4.onpointerup = () => {
+            changeScene(Clase_5_TickerScene, "clase_5")
+        };
         this.addChild(button4);
 
     }
 
+update(_deltaTime: number){}
 
 
 };

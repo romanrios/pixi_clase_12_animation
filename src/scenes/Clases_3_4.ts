@@ -4,7 +4,7 @@ import { Button } from "../UI/Button";
 import { ButtonTest } from "../UI/ButtonTest";
 import { Keyboard } from "../utils/Keyboard";
 
-export class Tarea_3_4 extends Container {
+export class Clases_3_4 extends Container {
 
     private testButton: ButtonTest;
     private lastKeyPressed: Text;

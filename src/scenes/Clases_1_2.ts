@@ -1,9 +1,8 @@
 import { Container, Graphics, Sprite, TextStyle, Text, AnimatedSprite, Texture, NineSlicePlane } from "pixi.js";
 import { app } from "..";
 import { MushroomHat } from "../game/MushroomHat";
-//import { MushroomHat } from "../game/MushroomHat";
 
-export class Tarea_1_2 extends Container {
+export class Clases_1_2 extends Container {
     constructor() {
         super();
 
@@ -33,9 +32,9 @@ export class Tarea_1_2 extends Container {
 
         // TextStyle
         const styly: TextStyle = new TextStyle({
-            fontFamily: "KenVector Future",
-            fontSize: 50,
-            //fontStyle: "oblique",
+            fontFamily: 'Square',
+            fontSize: 60,
+            fontStyle: "oblique",
             fontWeight: 'bold',
             fill: ['#ffffff', '#fab234'], // gradient
             stroke: '#4a1850',
@@ -47,13 +46,14 @@ export class Tarea_1_2 extends Container {
             dropShadowDistance: 4,
             wordWrap: true,
             wordWrapWidth: 400,
-            lineJoin: 'round',
+            lineJoin: 'round'
         });
-        const texty: Text = new Text('Testing Text and TextStyle', styly);
+        const texty: Text = new Text('welcome\n    to pixijs.', styly);
         // texty.text = "Text change. Do not abuse this resource";
         this.addChild(texty);
         texty.x = 100;
         texty.y = 520;
+        texty.angle = -14;
 
 
         // Animated Sprite
@@ -84,7 +84,8 @@ export class Tarea_1_2 extends Container {
         this.addChild(panel);
         panel.width = 300;
         panel.height = 80;
-        panel.position.set(100, 362);
+        panel.position.set(0, 362);
+        panel.alpha = 0.5;
 
 
         const panel2 = new NineSlicePlane(
@@ -93,9 +94,13 @@ export class Tarea_1_2 extends Container {
         );
         this.addChild(panel2);
         panel2.tint = 0x2ef0cc;
-        panel2.width = 150;
+        panel2.width = 100;
         panel2.height = 150;
-        panel2.position.set(520, 300);
+        panel2.position.set(650, 550);
+        panel2.angle=76
+        panel2.alpha = 0.5;
+
+
 
 
         //Ticker
