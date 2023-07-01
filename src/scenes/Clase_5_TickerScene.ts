@@ -107,12 +107,12 @@ export class Clase_5_TickerScene extends Container implements IUpdateable{
             this.robotAnimated.x += 0;
         }
 
-        if (Keyboard.state.get("ArrowRight")) {
+        if (Keyboard.state.get("ArrowRight") || Keyboard.state.get("KeyD")) {
             this.robotAnimated.animationSpeed = 0.3
             this.robotAnimated.scale.x = 1.5;
             this.robotAnimated.x += 6;
         }
-        if (Keyboard.state.get("ArrowLeft")) {
+        if (Keyboard.state.get("ArrowLeft")  || Keyboard.state.get("KeyA")) {
             this.robotAnimated.animationSpeed = 0.3;
             this.robotAnimated.scale.x = -1.5;
             this.robotAnimated.x -= 6;
