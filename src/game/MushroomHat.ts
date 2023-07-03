@@ -1,45 +1,53 @@
 import { Container, Sprite } from "pixi.js";
-import { app } from "..";
+import { IScene } from "../utils/IScene";
 
-export class MushroomHat extends Container {
+export class MushroomHat extends Container implements IScene {
+
+    public eyes: Sprite;
+    public hat: Sprite;
+    private mushroom: Sprite;
+    private mushroomContainer: Container;
+
     constructor() {
         super();
 
-        const mushroom: Sprite = Sprite.from("Mushroom_eyeless");
-        mushroom.anchor.set(0.5);
-        mushroom.scale.set(0.9, 0.9);
-        this.addChild(mushroom);
+        this.mushroom = Sprite.from("Mushroom_eyeless");
+        this.mushroom.anchor.set(0.5);
+        this.mushroom.scale.set(0.9, 0.9);
+        this.addChild(this.mushroom);
 
-        const eyes: Sprite = Sprite.from("Mushroom_eyes");
-        eyes.anchor.set(0.5);
-        eyes.scale.set(0.9, 0.9);
-        eyes.y = 60;
-        this.addChild(eyes);
+        this.eyes = Sprite.from("Mushroom_eyes");
+        this.eyes.anchor.set(0.5);
+        this.eyes.scale.set(0.9, 0.9);
+        this.eyes.y = 60;
+        this.addChild(this.eyes);
 
-        const hat: Sprite = Sprite.from("Hat");
-        hat.anchor.set(0.5);
-        hat.y = -130;
-        this.addChild(hat);
+        this.hat = Sprite.from("Hat");
+        this.hat.anchor.set(0.5);
+        this.hat.y = -130;
+        this.addChild(this.hat);
 
-        const mushroomContainer: Container = new Container();
-        mushroomContainer.addChild(mushroom);
-        mushroomContainer.addChild(hat);
-        mushroomContainer.addChild(eyes);
-        mushroomContainer.x = this.width / 2;
-        mushroomContainer.y = this.height / 2;
-        this.addChild(mushroomContainer);
-
-        // Ticker
-        let speed = 0.5;
-        app.ticker.add((delta) => {
-            eyes.x += speed * delta;
-            if (eyes.x < -10 || eyes.x > 10) {
-                speed = -speed;
-            }
-            hat.angle += speed;
-        });
+        this.mushroomContainer = new Container();
+        this.mushroomContainer.addChild(this.mushroom);
+        this.mushroomContainer.addChild(this.hat);
+        this.mushroomContainer.addChild(this.eyes);
+        this.mushroomContainer.x = this.width / 2;
+        this.mushroomContainer.y = this.height / 2;
+        this.addChild(this.mushroomContainer);
 
     }
+
+    private speed = 0.5;
+    update(delta: number): void {
+        this.eyes.x += this.speed * delta;
+        if (this.eyes.x < -10 || this.eyes.x > 10) {
+            this.speed = -this.speed;
+        }
+        this.hat.angle += this.speed;
+    }
+
+    
+
 }
 
 

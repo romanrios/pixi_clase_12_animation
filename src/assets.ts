@@ -35,8 +35,8 @@ export const manifest: ResolverManifest = {
             name: "clases_3_4",
             assets:
             {
-                Panel: "./panel3.png",
-                Square: "./Square.ttf",
+                // Panel: "./panel3.png",
+                // Square: "./Square.ttf",
                 Glow: "./glow.png",
                 Star: "./star.svg",
                 ThreeLines: "./3lines.svg",
@@ -52,7 +52,7 @@ export const manifest: ResolverManifest = {
             name: "songGame",
             assets:
             {
-                Montserrat: "./songgame/Montserrat-ExtraBold.ttf",
+                // Montserrat: "./songgame/Montserrat-ExtraBold.ttf",
                 BlackPaper: "./songgame/blackpaper.png",
                 SoundWave: "./songgame/soundwave.gif",
                 Correct: "./songgame/correct.mp3",
@@ -101,19 +101,21 @@ export const manifest: ResolverManifest = {
         },
 
         {
-            name: "clase_5",
+            name: "clases_5_6",
             assets:
             {
-                RobotWalk0: "./character_robot_walk0.png",
-                RobotWalk1: "./character_robot_walk1.png",
-                RobotWalk2: "./character_robot_walk2.png",
-                RobotWalk3: "./character_robot_walk3.png",
-                RobotWalk4: "./character_robot_walk4.png",
-                RobotWalk5: "./character_robot_walk5.png",
-                RobotWalk6: "./character_robot_walk6.png",
-                RobotWalk7: "./character_robot_walk7.png",
-                Panel: "./panel3.png",
-                Next: "./next.svg",
+                // RobotWalk0: "./character_robot_walk0.png",
+                // RobotWalk1: "./character_robot_walk1.png",
+                // RobotWalk2: "./character_robot_walk2.png",
+                // RobotWalk3: "./character_robot_walk3.png",
+                // RobotWalk4: "./character_robot_walk4.png",
+                // RobotWalk5: "./character_robot_walk5.png",
+                // RobotWalk6: "./character_robot_walk6.png",
+                // RobotWalk7: "./character_robot_walk7.png",
+                // Panel: "./panel3.png",
+                // Next: "./next.svg",
+                DvdLogo: "./dvdlogo.svg",
+                PortableDvd: "./portabledvd.png"
             }
         },
 

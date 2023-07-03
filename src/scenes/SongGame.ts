@@ -1,17 +1,18 @@
 import { Assets, Container, Sprite } from "pixi.js";
-import { app } from "..";
 import { sound } from '@pixi/sound';
 import { SongButton } from "../UI/SongButton";
 import { songs } from "./songs";
+import { Manager } from "../utils/Manager";
+import '@pixi/gif';
+import { IScene } from "../utils/IScene";
 
-export class SongGame extends Container {
+export class SongGame extends Container implements IScene{
 
     constructor() {
         super();
 
         const blackPaper = Sprite.from("BlackPaper");
         this.addChild(blackPaper);
-
 
 
         const NUMERO_OPCIONES = 4; // Número total de opciones por pregunta
@@ -36,12 +37,12 @@ export class SongGame extends Container {
                 }
             }
 
-
+            
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
             soundWave.height = 500;
             soundWave.anchor.set(0.5);
-            soundWave.position.set(app.screen.width / 2, 430)
+            soundWave.position.set(Manager.width / 2, 430)
             soundWave.eventMode = 'static';
             soundWave.cursor = 'pointer';
             let isPlaying = true;
@@ -62,13 +63,12 @@ export class SongGame extends Container {
 
             opciones.sort(() => Math.random() - 0.5); // Reordena aleatoriamente las opciones
 
-
             const buttonsContainer = new Container();
             this.addChild(buttonsContainer);
 
             opciones.forEach((opcion, i) => {
                 const button: SongButton = new SongButton(opcion.band);
-                button.position.set(app.screen.width / 2, buttonPositions[i]);
+                button.position.set(Manager.width / 2, buttonPositions[i]);
 
                 button.onpointerup = () => {
                     if (opcion === cancionCorrecta) {
@@ -105,4 +105,8 @@ export class SongGame extends Container {
 
 
     }
+    update(_framesPassed: number): void {
+        //throw new Error("Method not implemented.");
+    }
+
 }

@@ -1,11 +1,13 @@
 import { Container, NineSlicePlane, TextStyle, Texture, Text, Sprite } from "pixi.js";
-import { app } from "..";
 import { Button } from "../UI/Button";
 import { ButtonTest } from "../UI/ButtonTest";
 import { Keyboard } from "../utils/Keyboard";
+import { IScene } from "../utils/IScene";
+import { Manager } from "../utils/Manager";
 
-export class Clases_3_4 extends Container {
+export class Clases_3_4 extends Container implements IScene {
 
+    private glow: Sprite;
     private testButton: ButtonTest;
     private lastKeyPressed: Text;
 
@@ -15,12 +17,12 @@ export class Clases_3_4 extends Container {
         // PARA USAR ZINDEX
         // this.sortableChildren = true
 
-        const glow: Sprite = Sprite.from("Glow");
-        glow.anchor.set(0.5);
-        glow.x = app.screen.width / 2;
-        glow.y = 300;
-        this.addChild(glow);
-        glow.eventMode = 'static';
+        this.glow = Sprite.from("Glow");
+        this.glow.anchor.set(0.5);
+        this.glow.x = Manager.width / 2;
+        this.glow.y = 300;
+        this.addChild(this.glow);
+        this.glow.eventMode = 'static';
 
 
         const panelFondo = new NineSlicePlane(
@@ -31,7 +33,7 @@ export class Clases_3_4 extends Container {
         panelFondo.width = 500;
         panelFondo.height = 600;
         panelFondo.pivot.x = panelFondo.width / 2;
-        panelFondo.x = app.screen.width / 2;
+        panelFondo.x = Manager.width / 2;
         panelFondo.y = 400;
         this.addChild(panelFondo);
 
@@ -42,7 +44,7 @@ export class Clases_3_4 extends Container {
         panelTitle.width = 500;
         panelTitle.pivot.x = panelTitle.width / 2;
         panelTitle.height = 150;
-        panelTitle.x = app.screen.width / 2;
+        panelTitle.x = Manager.width / 2;
         panelTitle.y = 250;
         panelTitle.tint = 0x00C18C;
         this.addChild(panelTitle);
@@ -58,13 +60,13 @@ export class Clases_3_4 extends Container {
         });
         const titleText: Text = new Text('NIVEL\nCOMPLETADO', styly);
         titleText.anchor.set(0.5);
-        titleText.x = app.screen.width / 2;
+        titleText.x = Manager.width / 2;
         titleText.y = 325;
         this.addChild(titleText);
 
         const star1 = Sprite.from("Star");
         star1.pivot.set(star1.width / 2);
-        star1.x = app.screen.width / 2 - 130;
+        star1.x = Manager.width / 2 - 130;
         star1.y = 520;
         star1.angle = -10;
         this.addChild(star1);
@@ -72,13 +74,13 @@ export class Clases_3_4 extends Container {
         const star2 = Sprite.from("Star");
         star2.pivot.set(star2.width / 2);
         star2.scale.set(1.1);
-        star2.x = app.screen.width / 2;
+        star2.x = Manager.width / 2;
         star2.y = 490;
         this.addChild(star2);
 
         const star3 = Sprite.from("Star");
         star3.pivot.set(star3.width / 2);
-        star3.x = app.screen.width / 2 + 130;
+        star3.x = Manager.width / 2 + 130;
         star3.y = 520;
         star3.angle = 10;
         this.addChild(star3);
@@ -90,20 +92,20 @@ export class Clases_3_4 extends Container {
         });
         const textMonedas: Text = new Text(' MONEDAS   470 ', brownText);
         textMonedas.anchor.set(0.5);
-        textMonedas.x = app.screen.width / 2;
+        textMonedas.x = Manager.width / 2;
         textMonedas.y = 650;
         this.addChild(textMonedas);
 
         const textPuntaje: Text = new Text(' PUNTAJE   12500 ', brownText);
         textPuntaje.anchor.set(0.5);
-        textPuntaje.x = app.screen.width / 2;
+        textPuntaje.x = Manager.width / 2;
         textPuntaje.y = 740;
         this.addChild(textPuntaje);
 
 
         // UI Buttons
         const buttonHome: Button = new Button(0x00A3A8, "ThreeLines");
-        buttonHome.x = app.screen.width / 2 - 140;
+        buttonHome.x = Manager.width / 2 - 140;
         buttonHome.y = 880;
         this.addChild(buttonHome);
         buttonHome.onpointertap = () => {
@@ -111,7 +113,7 @@ export class Clases_3_4 extends Container {
         }
 
         const buttonRetry: Button = new Button(0xFFC931, "Retry");
-        buttonRetry.x = app.screen.width / 2;
+        buttonRetry.x = Manager.width / 2;
         buttonRetry.y = 880;
         this.addChild(buttonRetry);
         buttonRetry.onpointertap = () => {
@@ -119,7 +121,7 @@ export class Clases_3_4 extends Container {
         }
 
         const buttonNext: Button = new Button(0x00C18C, "Next");
-        buttonNext.x = app.screen.width / 2 + 140;
+        buttonNext.x = Manager.width / 2 + 140;
         buttonNext.y = 880
         this.addChild(buttonNext);
         buttonNext.onpointertap = () => {
@@ -157,7 +159,7 @@ export class Clases_3_4 extends Container {
         // Text Last Key Pressed
         this.lastKeyPressed = new Text("Presiona la letra B", { fontSize: 48 });
         this.lastKeyPressed.anchor.set(0.5);
-        this.lastKeyPressed.x = app.screen.width / 2;
+        this.lastKeyPressed.x = Manager.width / 2;
         this.lastKeyPressed.y = 1040;
         this.addChild(this.lastKeyPressed)
 
@@ -166,23 +168,21 @@ export class Clases_3_4 extends Container {
         // document.addEventListener("keydown", this.onKeyDown.bind(this))
         // document.addEventListener("keyup", this.onKeyUp.bind(this))
 
-        Keyboard.down.on("KeyB",this.onKeyB, this);
-        Keyboard.up.on("KeyB",this.onKeyBUp, this);
-
-
-        // Ticker
-        app.ticker.add((delta) => {
-            glow.angle -= 0.7 * delta;
-        });
+        Keyboard.down.on("KeyB", this.onKeyB, this);
+        Keyboard.up.on("KeyB", this.onKeyBUp, this);
 
     }
 
-    private onKeyB() : void {
+    update(_deltaTime: number, deltaFrame: number): void {
+        this.glow.angle -= 0.7 * deltaFrame;
+    }
+
+    private onKeyB(): void {
         console.log("apreté la B", this);
         this.lastKeyPressed.text = "Presionaste la letra B"
     }
 
-    private onKeyBUp() : void {
+    private onKeyBUp(): void {
         this.lastKeyPressed.text = "Soltaste la letra B"
         console.log("solté la B", this);
     }

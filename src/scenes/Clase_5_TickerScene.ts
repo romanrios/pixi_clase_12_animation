@@ -1,9 +1,9 @@
-import { AnimatedSprite, Container, NineSlicePlane, Texture, Ticker } from "pixi.js";
+import { AnimatedSprite, Container, NineSlicePlane, Texture } from "pixi.js";
 import { Button } from "../UI/Button";
 import { Keyboard } from "../utils/Keyboard";
-import { IUpdateable } from "../utils/IUpdateable";
+import { IScene } from "../utils/IScene";
 
-export class Clase_5_TickerScene extends Container implements IUpdateable{
+export class Clase_5_TickerScene extends Container implements IScene{
 
     private robotAnimated: AnimatedSprite;
 
@@ -14,11 +14,12 @@ export class Clase_5_TickerScene extends Container implements IUpdateable{
             Texture.from("Panel"),
             40, 40, 40, 40
         );
-        this.addChild(panel);
         panel.width = 720;
         panel.height = 80;
         panel.position.set(0, 692);
         panel.tint = 0xebdabc;
+        this.addChild(panel);
+
 
         // Animated Sprite
         this.robotAnimated = new AnimatedSprite(
@@ -81,49 +82,45 @@ export class Clase_5_TickerScene extends Container implements IUpdateable{
             this.movingLeft = false;
         });
 
-        Ticker.shared.add(this.update, this)
-
     }
 
 
-    movingRight = false
-    movingLeft = false
+    private movingRight = false
+    private movingLeft = false
 
-    update(deltaTime: number/*, deltaFrame: number*/) {
-        //deltaFrame *= 0.75;
-        this.robotAnimated.update(deltaTime);
-        //console.log(deltaFrame, Ticker.shared.FPS, Ticker.shared.deltaMS/1000);
+    update(deltaTime: number,deltaFrame: number) {
+
+console.log(deltaTime,deltaFrame)
+
+        this.robotAnimated.update(deltaFrame);
 
         if (this.movingRight == true) {
-            this.robotAnimated.animationSpeed = 0.3
+            this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
             this.robotAnimated.scale.x = 1.5;
-            this.robotAnimated.x += 6;
+            this.robotAnimated.x += 2 * deltaFrame;
         } else if (this.movingLeft == true) {
-            this.robotAnimated.animationSpeed = 0.3;
+            this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
             this.robotAnimated.scale.x = -1.5;
-            this.robotAnimated.x -= 6;
+            this.robotAnimated.x -= 2 * deltaFrame;
         } else {
             this.robotAnimated.animationSpeed = 0
             this.robotAnimated.x += 0;
         }
 
         if (Keyboard.state.get("ArrowRight") || Keyboard.state.get("KeyD")) {
-            this.robotAnimated.animationSpeed = 0.3
+            this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
             this.robotAnimated.scale.x = 1.5;
-            this.robotAnimated.x += 6;
+            this.robotAnimated.x += 2 * deltaFrame;
         }
         if (Keyboard.state.get("ArrowLeft")  || Keyboard.state.get("KeyA")) {
-            this.robotAnimated.animationSpeed = 0.3;
+            this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
             this.robotAnimated.scale.x = -1.5;
-            this.robotAnimated.x -= 6;
+            this.robotAnimated.x -= 2 * deltaFrame;
         }
 
         // LAG MACHINE
-        // for (let index = 0; index < 150000000; index++) {1+1;};
-
-        
+        // for (let index = 0; index < 35000000; index++) {1+1;};        
 
     }
-
 
 };

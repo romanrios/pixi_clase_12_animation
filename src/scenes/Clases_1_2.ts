@@ -1,32 +1,36 @@
 import { Container, Graphics, Sprite, TextStyle, Text, AnimatedSprite, Texture, NineSlicePlane } from "pixi.js";
-import { app } from "..";
+import { Manager } from "../utils/Manager";
 import { MushroomHat } from "../game/MushroomHat";
+import { IScene } from "../utils/IScene";
 
-export class Clases_1_2 extends Container {
+export class Clases_1_2 extends Container implements IScene {
+    private mushroomWithHat: MushroomHat;
+    private graphy: Graphics;
+
     constructor() {
         super();
 
         // Graphics
-        const graphy: Graphics = new Graphics();
-        graphy.beginFill(0x8ad2ff);
-        graphy.lineStyle(280, 0x6ec7ff);
-        graphy.drawCircle(0, 0, 380);
-        graphy.endFill();
-        this.addChild(graphy);
-        graphy.x = app.screen.width / 2;
-        graphy.y = app.screen.height / 2;
-        graphy.moveTo(700, 550);
+        this.graphy = new Graphics();
+        this.graphy.beginFill(0x8ad2ff);
+        this.graphy.lineStyle(280, 0x6ec7ff);
+        this.graphy.drawCircle(0, 0, 380);
+        this.graphy.endFill();
+        this.addChild(this.graphy);
+        this.graphy.x = Manager.width / 2;
+        this.graphy.y = Manager.height / 2;
+        this.graphy.moveTo(700, 550);
 
         // // Class extending from Container
-        const mushroomWithHat: MushroomHat = new MushroomHat();
-        mushroomWithHat.position.set(360, 400);
-        this.addChild(mushroomWithHat);
+        this.mushroomWithHat = new MushroomHat();
+        this.mushroomWithHat.position.set(360, 400);
+        this.addChild(this.mushroomWithHat);
 
         // Sprite
         const pipe: Sprite = Sprite.from("Pipe");
         pipe.scale.set(1.25);
         pipe.anchor.set(0.5);
-        pipe.x = app.screen.width / 2;
+        pipe.x = Manager.width / 2;
         pipe.y = 1200;
         this.addChild(pipe);
 
@@ -92,28 +96,30 @@ export class Clases_1_2 extends Container {
             Texture.from("Panel"),
             30, 30, 30, 30
         );
-        this.addChild(panel2);
-        panel2.tint = 0x2ef0cc;
-        panel2.width = 100;
-        panel2.height = 150;
-        panel2.position.set(650, 550);
-        panel2.angle=76
+        panel2.tint = 0x50b9f2;
+        panel2.width = 150;
+        panel2.height = 250;
+        panel2.position.set(540, 450);
         panel2.alpha = 0.5;
+        panel2.angle = 20;
+        this.addChild(panel2);
+    }
 
+    private speed = 0.5;
+    private speed_b = 5;
+    update(_deltaTime: number, deltaFrame: number): void {
+        this.mushroomWithHat.angle -= 0.5 * deltaFrame;
+        this.mushroomWithHat.y += this.speed_b * deltaFrame;
+        if (this.mushroomWithHat.y < 100 || this.mushroomWithHat.y > 1170) {
+            this.speed_b = -this.speed_b;
+        }
+        this.graphy.scale.x += 0.005 * this.speed_b * deltaFrame;
+        this.graphy.scale.y += 0.005 * this.speed_b * deltaFrame;
 
-
-
-        //Ticker
-        let speed_b = 5;
-        app.ticker.add((delta) => {
-            mushroomWithHat.angle -= 0.5 * delta;
-            mushroomWithHat.y += speed_b * delta;
-            if (mushroomWithHat.y < 100 || mushroomWithHat.y > 1170) {
-                speed_b = -speed_b;
-            }
-            graphy.scale.x += 0.005 * speed_b * delta;
-            graphy.scale.y += 0.005 * speed_b * delta;
-        });
-
+        this.mushroomWithHat.eyes.x += this.speed * deltaFrame;
+        if (this.mushroomWithHat.eyes.x < -10 || this.mushroomWithHat.eyes.x > 10) {
+            this.speed = -this.speed;
+        }
+        this.mushroomWithHat.hat.angle += this.speed * deltaFrame;
     }
 }
