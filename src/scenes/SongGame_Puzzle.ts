@@ -45,7 +45,7 @@ export class SongGame_Puzzle extends Container implements IScene {
 
             // Calcular las posiciones X e Y para centrar las piezas
             const offsetX = (Manager.width - pieceWidth * numPiecesX) / 2;
-            const offsetY = (Manager.height - pieceHeight * numPiecesY) / 2;
+            const offsetY = (Manager.height - pieceHeight * numPiecesY) / 2 + 20;
 
             sprite.position.set(
                 offsetX + (index % numPiecesX) * pieceWidth + pieceWidth / 2,
@@ -109,7 +109,7 @@ export class SongGame_Puzzle extends Container implements IScene {
     private puzzleCompleted(): void {
         this.disableButtons();
         const button1 = new SongButton("¡Completado!", 500);
-        button1.position.set(Manager.width / 2, 970)
+        button1.position.set(Manager.width / 2, 1005)
         this.addChild(button1);
     }
 
