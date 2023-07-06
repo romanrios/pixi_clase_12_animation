@@ -4,16 +4,17 @@ export class SongButton extends Container {
 
     private rectangle: Graphics;
 
-    constructor(band: string) {
+    constructor(band: string, myWidth: number) {
         super();
 
         this.rectangle = new Graphics();
         this.rectangle.lineStyle(4, 0xFFFFFF);
         this.rectangle.beginFill(0xFFFFFF, 0.00000001)
-        this.rectangle.drawRect(0, 0, 500, 110);
+        this.rectangle.drawRect(0, 0, myWidth, 110);
         this.rectangle.pivot.x = this.rectangle.width / 2
         this.rectangle.pivot.y = this.rectangle.height / 2
         this.addChild(this.rectangle);
+        
 
         const styly: TextStyle = new TextStyle({
             fontFamily: "Montserrat ExtraBold",
@@ -30,25 +31,13 @@ export class SongButton extends Container {
         this.eventMode = 'static';
         this.cursor = 'pointer';
 
-        this.onmouseover = () => {
+        this.on("mouseover", () => {
             this.scale.set(1.1);
-        }
+        });
 
-        this.onmouseout = () => {
+        this.on("mouseout", () => {
             this.scale.set(1);
-        }
-
-        // this.onpointerout = () => {
-        //     this.scale.set(1);
-        // }
-
-        // this.onpointerdown = () => {
-        //     this.scale.set(0.9);
-        // }
-
-        // this.onpointerup = () => {
-        //     this.scale.set(1);
-        // }        
+        });
 
     }
 
@@ -61,7 +50,5 @@ export class SongButton extends Container {
         this.rectangle.pivot.y = this.rectangle.height / 2;
     }
 
-
-
-
+    
 };

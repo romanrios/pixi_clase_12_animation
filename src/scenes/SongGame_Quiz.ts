@@ -1,12 +1,12 @@
 import { Assets, Container, Sprite } from "pixi.js";
-import { sound } from '@pixi/sound';
+import { IScene } from "../utils/IScene";
+import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
 import { songs } from "./songs";
-import { Manager } from "../utils/Manager";
+import { sound } from '@pixi/sound';
 import '@pixi/gif';
-import { IScene } from "../utils/IScene";
 
-export class SongGame extends Container implements IScene{
+export class SongGame_Quiz extends Container implements IScene{
 
     constructor() {
         super();
@@ -21,7 +21,7 @@ export class SongGame extends Container implements IScene{
             const opciones = [];
             const opcionesIndices = [];
 
-            // Obtén una canción aleatoria como la opción correcta
+            // Obtiene una canción aleatoria como la opción correcta
             const indiceCorrecto = getRandomInteger(0, songs.length - 1);
             const cancionCorrecta = songs[indiceCorrecto];
             opciones.push(cancionCorrecta);
@@ -36,7 +36,6 @@ export class SongGame extends Container implements IScene{
                     opcionesIndices.push(indiceIncorrecto);
                 }
             }
-
             
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
@@ -67,7 +66,7 @@ export class SongGame extends Container implements IScene{
             this.addChild(buttonsContainer);
 
             opciones.forEach((opcion, i) => {
-                const button: SongButton = new SongButton(opcion.band);
+                const button: SongButton = new SongButton(opcion.band,500);
                 button.position.set(Manager.width / 2, buttonPositions[i]);
 
                 button.onpointerup = () => {
@@ -106,7 +105,7 @@ export class SongGame extends Container implements IScene{
 
     }
     update(_framesPassed: number): void {
-        //throw new Error("Method not implemented.");
+        // update
     }
 
 }

@@ -3,7 +3,7 @@ import { Button } from "../UI/Button";
 import { Keyboard } from "../utils/Keyboard";
 import { IScene } from "../utils/IScene";
 
-export class Clase_5_TickerScene extends Container implements IScene{
+export class Clase_5_TickerScene extends Container implements IScene {
 
     private robotAnimated: AnimatedSprite;
 
@@ -88,9 +88,9 @@ export class Clase_5_TickerScene extends Container implements IScene{
     private movingRight = false
     private movingLeft = false
 
-    update(deltaTime: number,deltaFrame: number) {
+    update(deltaTime: number, deltaFrame: number) {
 
-console.log(deltaTime,deltaFrame)
+        console.log(deltaTime, deltaFrame)
 
         this.robotAnimated.update(deltaFrame);
 
@@ -112,7 +112,7 @@ console.log(deltaTime,deltaFrame)
             this.robotAnimated.scale.x = 1.5;
             this.robotAnimated.x += 2 * deltaFrame;
         }
-        if (Keyboard.state.get("ArrowLeft")  || Keyboard.state.get("KeyA")) {
+        if (Keyboard.state.get("ArrowLeft") || Keyboard.state.get("KeyA")) {
             this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
             this.robotAnimated.scale.x = -1.5;
             this.robotAnimated.x -= 2 * deltaFrame;

@@ -34,7 +34,7 @@ export class LoaderScene extends Container implements IScene {
         this.loaderBar.position.y = (Manager.height - this.loaderBar.height) / 2;
         this.addChild(this.loaderBar);
 
-        this.texty = new Text("L  O  A  D  I  N  G", {fontSize:30, fill:0xFFFFFF});
+        this.texty = new Text("C  A  R  G  A  N  D  O", {fontSize:30, fill:0xFFFFFF});
         this.texty.anchor.set(0.5);
         this.texty.position.set(Manager.width/2,Manager.height/2);
         this.addChild(this.texty)
