@@ -7,12 +7,15 @@ import { sound } from '@pixi/sound';
 import '@pixi/gif';
 
 export class SongGame_Quiz extends Container implements IScene{
+    private quizBackground: Sprite;
 
     constructor() {
         super();
 
-        const blackPaper = Sprite.from("BlackPaper");
-        this.addChild(blackPaper);
+        this.quizBackground = Sprite.from("QuizBackground");
+        this.quizBackground.anchor.set(0.5),
+        this.quizBackground.position.set(Manager.width/2,Manager.height/2)
+        this.addChild(this.quizBackground);
 
 
         const NUMERO_OPCIONES = 4; // Número total de opciones por pregunta
@@ -39,9 +42,10 @@ export class SongGame_Quiz extends Container implements IScene{
             
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
+            soundWave.alpha = 0.5;
             soundWave.height = 500;
             soundWave.anchor.set(0.5);
-            soundWave.position.set(Manager.width / 2, 430)
+            soundWave.position.set(Manager.width / 2, 350)
             soundWave.eventMode = 'static';
             soundWave.cursor = 'pointer';
             let isPlaying = true;
@@ -104,8 +108,23 @@ export class SongGame_Quiz extends Container implements IScene{
 
 
     }
-    update(_framesPassed: number): void {
-        // update
+    
+    
+
+    currentTime = 0; // Tiempo actual para el cálculo de la escala
+
+    update(deltaTime: number, _deltaFrame: number): void {
+
+        const scaleMin = 1; // Escala mínima del objeto
+        const scaleMax = 1.04; // Escala máxima del objeto
+        const beatDuration = 1400; // Duración de un latido en milisegundos
+
+        this.currentTime += deltaTime;
+
+        const t = (this.currentTime % beatDuration) / beatDuration;
+        const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
+
+        this.quizBackground.scale.set(scale);
     }
 
 }

@@ -9,6 +9,7 @@ import { IScene } from "../utils/IScene";
 import { Clase_6 } from "./Clase_6";
 import { SongGame_Quiz } from "./SongGame_Quiz";
 import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
+import { SongGame_Title } from "./SongGame_Title";
 
 export class GameScene extends Container implements IScene {
     private button0: SongButton;
@@ -37,21 +38,21 @@ export class GameScene extends Container implements IScene {
 
         this.button0 = new SongButton("Regresar al inicio", 500);
         this.button0.position.set(Manager.width / 2, 130);
-        this.button0.onpointerup = () => {
+        this.button0.on("pointertap", () => {
             sound.stopAll();
             Manager.changeScene(new GameScene());
-        };
+        });
 
         const createButton = (text: string, y: number, scene: any) => {
             const button = new SongButton(text, 500);
             button.position.set(Manager.width / 2, y);
-            button.onpointertap = () => {
+            button.on("pointertap", () => {
                 if (this.isDragging) {
                     const newScene = new scene();
                     Manager.changeScene(newScene);
                     newScene.addChild(this.button0);
                 }
-            };
+            });
             return button;
         };
 
@@ -74,17 +75,24 @@ export class GameScene extends Container implements IScene {
         const button6 = new SongButton("Song Game Puzzle", 500);
         button6.position.set(Manager.width / 2, button5.y + 150);
         button6.onpointertap = () => {
-            if (this.isDragging) {
+            if (document.fullscreenElement || this.isDragging) {
                 const newScene = new SongGame_LevelSelector();
                 Manager.changeScene(newScene);
             }
         };
         this.addChild(button6);
 
-
-        const button7 = createButton("Clase 7", button6.y + 150, "");
-        button7.eventMode = "none";
-        button7.alpha = 0.4;
+        const button7 = new SongButton("Song Game Title", 500);
+        button7.position.set(Manager.width / 2, button6.y + 150);
+        button7.on("pointertap", () => {
+            if (this.isDragging) {
+                const newScene = new SongGame_Title();
+                Manager.changeScene(newScene);
+                newScene.addChild(this.button0);
+                this.button0.alpha = 0.5,
+                    this.button0.position.set(Manager.width / 2, 1180)
+            }
+        });
         this.addChild(button7);
 
         const button8 = createButton("Clase 8", button7.y + 150, "");
@@ -92,6 +100,7 @@ export class GameScene extends Container implements IScene {
         button8.alpha = 0.4;
         this.addChild(button8);
 
+        // dragging
         this.eventMode = "static";
         this.dragData = null;
         this.dragStartY = 0;
@@ -131,8 +140,9 @@ export class GameScene extends Container implements IScene {
         }
 
         this.isDragging = false;
-    }
 
+
+    }
 
     private onDragEnd(): void {
         this.dragData = null;
@@ -144,7 +154,6 @@ export class GameScene extends Container implements IScene {
         }, 10);
 
     }
-
 
     private onMouseWheel(event: WheelEvent): void {
         const deltaY = event.deltaY;

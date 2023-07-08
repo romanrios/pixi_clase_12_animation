@@ -53,8 +53,13 @@ export const manifest: ResolverManifest = {
             assets:
             {
                 // Montserrat: "./songgame/Montserrat-ExtraBold.ttf",
-                BlackWallFrame: "./songgame/blackwall_frame.png",
-                BlackPaper: "./songgame/blackpaper.png",
+                Guitar: "./songgame/guitar.mp3",
+                Rayo: "./songgame/rayo.gif",
+                TitleLogo: "./songgame/titlelogo.png",
+                TitleBackground: "./songgame/titlebackground.jpg",
+                QuizBackground: "./songgame/quizbackground.jpg",
+                BlackWall: "./songgame/blackwall.jpg",
+                BlackPaper: "./songgame/blackpaper.jpg",
                 SoundWave: "./songgame/soundwave.gif",
                 Correct: "./songgame/correct.mp3",
                 Wrong: "./songgame/wrong.mp3",

@@ -14,7 +14,7 @@ export class SongGame_Puzzle extends Container implements IScene {
     constructor(img: TextureSource, difficulty: number) {
         super();
 
-        const background = Sprite.from("BlackWallFrame");
+        const background = Sprite.from("BlackWall");
         this.addChild(background);
 
         const texture = Texture.from(img);
