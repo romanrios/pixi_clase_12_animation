@@ -6,7 +6,7 @@ import { songs } from "./songs";
 import { sound } from '@pixi/sound';
 import '@pixi/gif';
 
-export class SongGame_Quiz extends Container implements IScene{
+export class SongGame_Quiz extends Container implements IScene {
     private quizBackground: Sprite;
 
     constructor() {
@@ -14,7 +14,7 @@ export class SongGame_Quiz extends Container implements IScene{
 
         this.quizBackground = Sprite.from("QuizBackground");
         this.quizBackground.anchor.set(0.5),
-        this.quizBackground.position.set(Manager.width/2,Manager.height/2)
+            this.quizBackground.position.set(Manager.width / 2, Manager.height / 2)
         this.addChild(this.quizBackground);
 
 
@@ -39,7 +39,7 @@ export class SongGame_Quiz extends Container implements IScene{
                     opcionesIndices.push(indiceIncorrecto);
                 }
             }
-            
+
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
             soundWave.alpha = 0.5;
@@ -70,7 +70,7 @@ export class SongGame_Quiz extends Container implements IScene{
             this.addChild(buttonsContainer);
 
             opciones.forEach((opcion, i) => {
-                const button: SongButton = new SongButton(opcion.band,500);
+                const button: SongButton = new SongButton(opcion.band, 500);
                 button.position.set(Manager.width / 2, buttonPositions[i]);
 
                 button.onpointerup = () => {
@@ -108,23 +108,12 @@ export class SongGame_Quiz extends Container implements IScene{
 
 
     }
-    
-    
 
-    currentTime = 0; // Tiempo actual para el cálculo de la escala
 
-    update(deltaTime: number, _deltaFrame: number): void {
 
-        const scaleMin = 1; // Escala mínima del objeto
-        const scaleMax = 1.04; // Escala máxima del objeto
-        const beatDuration = 1400; // Duración de un latido en milisegundos
 
-        this.currentTime += deltaTime;
-
-        const t = (this.currentTime % beatDuration) / beatDuration;
-        const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
-
-        this.quizBackground.scale.set(scale);
+    update(_deltaTime: number, _deltaFrame: number): void {
+        // update
     }
 
 }
