@@ -2,14 +2,16 @@ import { Assets, Container, Sprite } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
-import { songs } from "./songs";
 import { sound } from '@pixi/sound';
 import '@pixi/gif';
+import { songs } from "./songs";
+import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
 
 export class SongGame_Quiz extends Container implements IScene {
     private quizBackground: Sprite;
+    button1: SongButton;
 
-    constructor() {
+    constructor(options:any, level:number) {
         super();
 
         this.quizBackground = Sprite.from("QuizBackground");
@@ -17,22 +19,29 @@ export class SongGame_Quiz extends Container implements IScene {
             this.quizBackground.position.set(Manager.width / 2, Manager.height / 2)
         this.addChild(this.quizBackground);
 
+        this.button1 = new SongButton("Volver al selector", 500);
+        this.addChild(this.button1);
+        this.button1.position.set(Manager.width / 2, 130)
+        this.button1.on("pointertap", () => {
+            sound.stopAll();
+            Manager.changeScene(new SongGame_LevelSelector)
+        });
 
-        const NUMERO_OPCIONES = 4; // Número total de opciones por pregunta
+        const NUMERO_OPCIONES = options; // Número total de opciones por pregunta
 
         const generarPregunta = (): void => {
             const opciones = [];
             const opcionesIndices = [];
 
             // Obtiene una canción aleatoria como la opción correcta
-            const indiceCorrecto = getRandomInteger(0, songs.length - 1);
+            const indiceCorrecto = getRandomInteger(0, /*songs.length*/level - 1);
             const cancionCorrecta = songs[indiceCorrecto];
             opciones.push(cancionCorrecta);
             opcionesIndices.push(indiceCorrecto);
 
             // Genera opciones incorrectas hasta alcanzar el número total de opciones
             while (opciones.length < NUMERO_OPCIONES) {
-                const indiceIncorrecto = getRandomInteger(0, songs.length - 1);
+                const indiceIncorrecto = getRandomInteger(0, /*songs.length*/level - 1);
                 // Verifica que el índice no esté repetido y no sea el índice de la opción correcta
                 if (!opcionesIndices.includes(indiceIncorrecto) && indiceIncorrecto !== indiceCorrecto) {
                     opciones.push(songs[indiceIncorrecto]);
@@ -43,7 +52,7 @@ export class SongGame_Quiz extends Container implements IScene {
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
             soundWave.alpha = 0.5;
-            soundWave.height = 500;
+            soundWave.height = 201;
             soundWave.anchor.set(0.5);
             soundWave.position.set(Manager.width / 2, 350)
             soundWave.eventMode = 'static';
@@ -51,11 +60,11 @@ export class SongGame_Quiz extends Container implements IScene {
             let isPlaying = true;
             soundWave.onpointerup = () => {
                 if (isPlaying) {
-                    soundWave.height = 100
+                    soundWave.height = 20
                     sound.stopAll();
                     isPlaying = false;
                 } else {
-                    soundWave.height = 500
+                    soundWave.height = 201
                     sound.play(cancionCorrecta.audio)
                     isPlaying = true;
                 }

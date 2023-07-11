@@ -2,7 +2,7 @@ import { Container, Graphics, Text, TextStyle } from "pixi.js";
 
 export class SongButton extends Container {
 
-    private rectangle: Graphics;
+    /*private*/ rectangle: Graphics;
 
     constructor(band: string, myWidth: number) {
         super();
@@ -14,7 +14,7 @@ export class SongButton extends Container {
         this.rectangle.pivot.x = this.rectangle.width / 2
         this.rectangle.pivot.y = this.rectangle.height / 2
         this.addChild(this.rectangle);
-        
+
 
         const styly: TextStyle = new TextStyle({
             fontFamily: "Montserrat ExtraBold",
@@ -32,12 +32,13 @@ export class SongButton extends Container {
         this.cursor = 'pointer';
 
         this.on("mouseover", () => {
-            this.scale.set(1.1);
+            this.scale.set(this.scale.x * 1.07);
         });
 
         this.on("mouseout", () => {
-            this.scale.set(1);
+            this.scale.set(this.scale.x / 1.07);
         });
+
 
     }
 
@@ -50,5 +51,7 @@ export class SongButton extends Container {
         this.rectangle.pivot.y = this.rectangle.height / 2;
     }
 
-    
+
+
+
 };

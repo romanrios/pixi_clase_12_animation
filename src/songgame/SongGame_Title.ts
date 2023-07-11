@@ -4,6 +4,7 @@ import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
 import '@pixi/gif';
 import { sound } from '@pixi/sound';
+import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
 
 export class SongGame_Title extends Container implements IScene {
     private titleLogo: Sprite;
@@ -32,8 +33,12 @@ export class SongGame_Title extends Container implements IScene {
         this.addChild(rayo2);
 
         const button = new SongButton("Jugar", 500);
-        button.position.set(Manager.width / 2, 1050)
+        button.position.set(Manager.width / 2, 1050);
         this.addChild(button);
+        button.on("pointerup",() =>{
+            const newScene = new SongGame_LevelSelector();
+            Manager.changeScene(newScene);
+        })
 
 
     }

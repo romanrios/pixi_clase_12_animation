@@ -53,6 +53,8 @@ export const manifest: ResolverManifest = {
             assets:
             {
                 // Montserrat: "./songgame/Montserrat-ExtraBold.ttf",
+                Scratch: "./songgame/scratch.mp3",
+                Pip: "./songgame/pip.mp3",
                 Guitar: "./songgame/guitar.mp3",
                 Rayo: "./songgame/rayo.gif",
                 TitleLogo: "./songgame/titlelogo.png",
@@ -167,6 +169,23 @@ export const manifest: ResolverManifest = {
                 PortableDvd: "./portabledvd.png"
             }
         },
-
+        {
+            name: "clase_7",
+            assets:
+            {
+                // RobotWalk0: "./character_robot_walk0.png",
+                // RobotWalk1: "./character_robot_walk1.png",
+                // RobotWalk2: "./character_robot_walk2.png",
+                // RobotWalk3: "./character_robot_walk3.png",
+                // RobotWalk4: "./character_robot_walk4.png",
+                // RobotWalk5: "./character_robot_walk5.png",
+                // RobotWalk6: "./character_robot_walk6.png",
+                // RobotWalk7: "./character_robot_walk7.png",
+                // Panel: "./panel3.png",
+                // Next: "./next.svg",
+                SciFiBackground: "./scifibackground.jpg",
+                Platform: "./platform.png"
+            }
+        },
     ]
 }
