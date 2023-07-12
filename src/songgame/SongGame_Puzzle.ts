@@ -1,11 +1,15 @@
-import { Container, Rectangle, Sprite, Texture } from "pixi.js";
+import { Container, Rectangle, Sprite, Texture, Text } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
 import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
 import { sound } from "@pixi/sound";
+import { levels } from "./levels";
+import { SongGame_Quiz } from "./SongGame_Quiz";
 
 export class SongGame_Puzzle extends Container implements IScene {
+
+    public currentLevel: number;
 
     private imgSong: Sprite[];
     private isImageComplete: boolean;
@@ -16,6 +20,8 @@ export class SongGame_Puzzle extends Container implements IScene {
 
     constructor(img: any, difficulty: any) {
         super();
+
+        this.currentLevel = 0
 
         const background = Sprite.from("BlackWall");
         this.addChild(background);
@@ -28,7 +34,18 @@ export class SongGame_Puzzle extends Container implements IScene {
             Manager.changeScene(new SongGame_LevelSelector)
         });
 
-        
+        const texty = new Text("ESCUCHÁ Y RECORDÁ\nEL NOMBRE DEL INTÉRPRETE", {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 20,
+            lineHeight: 40,
+            letterSpacing: 7
+        });
+        texty.anchor.set(0.5);
+        texty.position.set(Manager.width/2,290)
+        this.addChild(texty);
+
 
         const texture = Texture.from(img);
 
@@ -146,10 +163,43 @@ export class SongGame_Puzzle extends Container implements IScene {
     private puzzleCompleted(): void {
         sound.play("Correct");
         this.disableButtons();
-        const button1 = new SongButton("¡Completado!", 500);
-        button1.position.set(Manager.width / 2, 1005)
+
+        const texty: Text = new Text(
+            levels[Manager.currentLevel].song.band,
+            {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 40,
+            lineHeight: 39
+        });
+        texty.anchor.set(0.5);
+        texty.position.set(Manager.width/2,1005)
+        this.addChild(texty);
+
+
+        // Crea botón que lleva al siguiente nivel y actualiza variable currentLevel
+        const button1 = new SongButton("Siguiente nivel", 500);
+        button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
-            Manager.changeScene(new SongGame_Puzzle(`ImgSong0`, 2))
+            if (levels[Manager.currentLevel + 1].isPuzzle) {
+                button1.on("pointertap", () => {
+                    sound.stopAll();
+                    Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel + 1].song.img, levels[Manager.currentLevel + 1].difficulty));
+                    sound.play(levels[Manager.currentLevel + 1].song.audio);
+                    Manager.currentLevel += 1;
+                    console.log(Manager.currentLevel);
+                });
+            }
+            if (!levels[Manager.currentLevel + 1].isPuzzle) {
+                button1.on("pointertap", () => {
+                    sound.stopAll();
+                    Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel + 1].options, levels[Manager.currentLevel + 1].difficulty));
+                    Manager.currentLevel += 1;
+                    console.log(Manager.currentLevel);
+                });
+            }
+
         })
         this.addChild(button1);
     }

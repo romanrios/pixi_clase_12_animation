@@ -4,10 +4,22 @@ import { IScene } from "./IScene";
 export class Manager {
 
     private constructor() { /*this class is purely static. No constructor to see here*/ }
+    
 
     // Safely store variables for our game
     private static app: Application;
     private static currentScene: IScene;
+
+    // QUIZGAME Current level variable getter and setter
+    private static _currentLevel: number;
+
+    public static get currentLevel(): number {
+        return Manager._currentLevel;
+    }
+    public static set currentLevel(value: number) {
+        Manager._currentLevel = value;
+    }
+    
 
     // Width and Height are read-only after creation (for now)
     private static _width: number;
@@ -67,7 +79,7 @@ export class Manager {
 
         // Add the ticker
         //Manager.app.ticker.add(Manager.update)
-        Ticker.shared.add(Manager.update)        
+        Ticker.shared.add(Manager.update)
 
     }
 
