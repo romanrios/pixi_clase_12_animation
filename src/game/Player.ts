@@ -15,7 +15,7 @@ export class Player extends PhysicsContainer implements IHitbox {
 
     private robotAnimated: AnimatedSprite;
 
-   private hitbox: Graphics;
+    private hitbox: Graphics;
 
     constructor() {
         super();
@@ -46,10 +46,10 @@ export class Player extends PhysicsContainer implements IHitbox {
         auxZero.endFill();
 
         this.hitbox = new Graphics();
-        this.hitbox.beginFill(0xFF00FF,0.3);
-        this.hitbox.drawRect(0,-140,90,140);
+        this.hitbox.beginFill(0xFF00FF, 0.3);
+        this.hitbox.drawRect(0, -140, 90, 140);
         this.hitbox.endFill;
-        this.hitbox.pivot.x = this.hitbox.width/2;          
+        this.hitbox.pivot.x = this.hitbox.width / 2;
 
 
         this.addChild(this.robotAnimated);
@@ -65,16 +65,16 @@ export class Player extends PhysicsContainer implements IHitbox {
         Keyboard.up.on("ArrowLeft", () => {
             this.speed.x = 0;
         });
-        
+
         Keyboard.up.on("ArrowRight", () => {
             this.speed.x = 0;
         });
     }
 
     // la contraparte de agregar eventos al teclado, debemos apagarlos
-    public override destroy(options: any){
+    public override destroy(options: any) {
         super.destroy(options);
-        Keyboard.down.off("ArrowUp",this.jump)
+        Keyboard.down.off("ArrowUp", this.jump)
     }
 
     public override update(deltaMS: number) {
@@ -87,7 +87,7 @@ export class Player extends PhysicsContainer implements IHitbox {
         } else if (Keyboard.state.get("ArrowLeft")) {
             this.speed.x = -Player.MOVE_SPEED;
             this.robotAnimated.scale.x = -Player.SCALE;
-        } 
+        }
         // reemplazado por Keyboard.up.on ...
         // else if{
         //  this.speed.x = 0;
@@ -106,8 +106,7 @@ export class Player extends PhysicsContainer implements IHitbox {
         }
     }
 
-    public getHitbox(): Rectangle
-    {
+    public getHitbox(): Rectangle {
         return this.hitbox.getBounds()
     }
 
@@ -129,6 +128,10 @@ export class Player extends PhysicsContainer implements IHitbox {
             }
         }
     }
+
+    public setPlayerScaleX(scaleX: number) {
+        this.robotAnimated.scale.x = scaleX;
+      }
 
 
 }

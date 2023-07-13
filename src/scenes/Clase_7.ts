@@ -42,7 +42,9 @@ export class Clase_7 extends Container implements IScene {
         buttonLeft.getChildAt(1).angle = 180
         buttonLeft.getChildAt(1).position.x -= 2
         this.addChild(buttonLeft);
-        buttonLeft.on('pointerdown', () => { this.playerRobot.speed.x = -350 })
+        buttonLeft.on('pointerdown', () => {
+            this.playerRobot.speed.x = -350;
+            this.playerRobot.setPlayerScaleX(-1.5);})
             .on('pointerup', () => { this.playerRobot.speed.x = 0 })
             .on('pointerout', () => { this.playerRobot.speed.x = 0 })
             .on('pointerupoutside', () => { this.playerRobot.speed.x = 0 });
@@ -50,7 +52,9 @@ export class Clase_7 extends Container implements IScene {
         const buttonRight: Button = new Button(0xf52222, "Next");
         buttonRight.position.set(250, 1200);
         this.addChild(buttonRight);
-        buttonRight.on('pointerdown', () => { this.playerRobot.speed.x = 350 })
+        buttonRight.on('pointerdown', () => {
+            this.playerRobot.speed.x = 350;
+            this.playerRobot.setPlayerScaleX(1.5); })
             .on('pointerup', () => { this.playerRobot.speed.x = 0 })
             .on('pointerupoutside', () => { this.playerRobot.speed.x = 0 })
             .on('pointerout', () => { this.playerRobot.speed.x = 0 });
