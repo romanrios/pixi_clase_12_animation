@@ -4,6 +4,7 @@ import { Manager } from "../utils/Manager";
 import { Player } from "../game/Player";
 import { Platform } from "../game/Platform";
 import { checkCollision } from "../game/IHitbox";
+import { Button } from "../UI/Button";
 
 export class Clase_7 extends Container implements IScene {
 
@@ -33,6 +34,34 @@ export class Clase_7 extends Container implements IScene {
         this.playerRobot = new Player();
         this.addChild(this.playerRobot);
 
+
+
+        // movement buttons
+        const buttonLeft: Button = new Button(0xf52222, "Next");
+        buttonLeft.position.set(100, 1200);
+        buttonLeft.getChildAt(1).angle = 180
+        buttonLeft.getChildAt(1).position.x -= 2
+        this.addChild(buttonLeft);
+        buttonLeft.on('pointerdown', () => { this.playerRobot.speed.x = -350 })
+            .on('pointerup', () => { this.playerRobot.speed.x = 0 })
+            .on('pointerout', () => { this.playerRobot.speed.x = 0 })
+            .on('pointerupoutside', () => { this.playerRobot.speed.x = 0 });
+
+        const buttonRight: Button = new Button(0xf52222, "Next");
+        buttonRight.position.set(250, 1200);
+        this.addChild(buttonRight);
+        buttonRight.on('pointerdown', () => { this.playerRobot.speed.x = 350 })
+            .on('pointerup', () => { this.playerRobot.speed.x = 0 })
+            .on('pointerupoutside', () => { this.playerRobot.speed.x = 0 })
+            .on('pointerout', () => { this.playerRobot.speed.x = 0 });
+
+        const buttonJump: Button = new Button(0xf52222, "Next");
+        buttonJump.position.set(600, 1200);
+        buttonJump.getChildAt(1).angle = -90;
+        buttonJump.getChildAt(1).position.y -= 3;
+        this.addChild(buttonJump);
+        buttonJump.on('pointerdown', () => { this.playerRobot.jump() });
+
     }
 
 
@@ -43,7 +72,7 @@ export class Clase_7 extends Container implements IScene {
         for (let platform of this.platforms) {
             const overlap = checkCollision(this.playerRobot, platform);
             if (overlap != null) {
-                this.playerRobot.separate(overlap, platform.position);                
+                this.playerRobot.separate(overlap, platform.position);
             }
         }
 

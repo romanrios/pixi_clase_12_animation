@@ -60,6 +60,15 @@ export class Player extends PhysicsContainer implements IHitbox {
 
         Keyboard.down.on("ArrowUp", this.jump, this)
 
+
+        // agregado para que no anule botones touch
+        Keyboard.up.on("ArrowLeft", () => {
+            this.speed.x = 0;
+        });
+        
+        Keyboard.up.on("ArrowRight", () => {
+            this.speed.x = 0;
+        });
     }
 
     // la contraparte de agregar eventos al teclado, debemos apagarlos
@@ -78,17 +87,19 @@ export class Player extends PhysicsContainer implements IHitbox {
         } else if (Keyboard.state.get("ArrowLeft")) {
             this.speed.x = -Player.MOVE_SPEED;
             this.robotAnimated.scale.x = -Player.SCALE;
-        } else {
-            this.speed.x = 0;
-        }
+        } 
+        // reemplazado por Keyboard.up.on ...
+        // else if{
+        //  this.speed.x = 0;
+        //}  
 
         // if (Keyboard.state.get("ArrowUp")) {
         //     this.jump();
         // }
     }
 
-
-    private jump() {
+    // publica para poder acceder desde Clase_7.ts
+    jump() {
         if (this.canJump) {
             this.canJump = false;
             this.speed.y = -600;

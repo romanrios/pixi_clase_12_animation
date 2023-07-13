@@ -82,7 +82,7 @@ export class Curso_MainMenu extends Container implements IScene {
         const button5 = createButton("Clase 6", button4.y + 150, Clase_6);
         this.addChild(button5);        
 
-        const button6 = createButton("Clase 7\n(en progreso)", button5.y + 150, Clase_7);
+        const button6 = createButton("Clase 7", button5.y + 150, Clase_7);
         this.addChild(button6);
 
 
