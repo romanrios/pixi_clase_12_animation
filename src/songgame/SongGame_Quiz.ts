@@ -20,10 +20,6 @@ export class SongGame_Quiz extends Container implements IScene {
     constructor(options: any, level: number) {
         super();
 
-        this.counter = 5
-        this.counterCorrect = 0
-        this.counterWrong = 0
-
         this.quizBackground = Sprite.from("QuizBackground");
         this.quizBackground.anchor.set(0.5),
             this.quizBackground.position.set(Manager.width / 2, Manager.height / 2)
@@ -32,19 +28,31 @@ export class SongGame_Quiz extends Container implements IScene {
         this.button1 = new SongButton("Volver al selector", 500);
         this.addChild(this.button1);
         this.button1.position.set(Manager.width / 2, 130)
-        this.button1.on("pointertap", () => {
+        this.button1.on("pointerup", () => {
             sound.stopAll();
             Manager.changeScene(new SongGame_LevelSelector)
         });
 
-        const NUMERO_OPCIONES = options; // Número total de opciones por pregunta
 
-        const generarPregunta = (): void => {
+        // FUNCION GENERAR PREGUNTA
+        const NUMERO_OPCIONES = options; // Número total de opciones por pregunta
+        this.counter = 4 -1 // CANTIDAD DE PREGUNTAS !!
+        this.counterCorrect = 0
+        this.counterWrong = 0
+        const opcionesCorrectasYaElegidas: number[] = []
+
+        const generarPregunta = () => {
             const opciones = [];
             const opcionesIndices = [];
 
             // Obtiene una canción aleatoria como la opción correcta
-            const indiceCorrecto = getRandomInteger(0, /*songs.length*/level - 1);
+            let indiceCorrecto = getRandomInteger(0, /*songs.length*/ level - 1);
+
+            // Verifica que no se repita y actualiza los arreglos
+            while(opcionesCorrectasYaElegidas.includes(indiceCorrecto)){
+                indiceCorrecto = getRandomInteger(0, /*songs.length*/ level - 1);
+            }
+            opcionesCorrectasYaElegidas.push(indiceCorrecto)
             const cancionCorrecta = songs[indiceCorrecto];
             opciones.push(cancionCorrecta);
             opcionesIndices.push(indiceCorrecto);
@@ -59,6 +67,7 @@ export class SongGame_Quiz extends Container implements IScene {
                 }
             }
 
+            // GIF DE ONDAS
             const soundWave = Assets.get('SoundWave');
             sound.play(cancionCorrecta.audio);
             soundWave.alpha = 0.5;
@@ -81,7 +90,8 @@ export class SongGame_Quiz extends Container implements IScene {
             }
             this.addChild(soundWave);
 
-            const buttonPositions = [650, 800, 950, 1100]; // Posiciones verticales de los botones
+
+            const answerPositions = [650, 800, 950, 1100]; // Posiciones verticales de los botones
 
             opciones.sort(() => Math.random() - 0.5); // Reordena aleatoriamente las opciones
 
@@ -90,11 +100,9 @@ export class SongGame_Quiz extends Container implements IScene {
 
             opciones.forEach((opcion, i) => {
                 const button: SongButton = new SongButton(opcion.band, 500);
-                button.position.set(Manager.width / 2, buttonPositions[i]);
+                button.position.set(Manager.width / 2, answerPositions[i]);
 
                 button.onpointerup = () => {
-
-
 
                     if (opcion === cancionCorrecta) {
                         this.counterCorrect += 1;
@@ -110,10 +118,11 @@ export class SongGame_Quiz extends Container implements IScene {
                         sound.play("Wrong");
                     }
 
-
+                    // función con retardo de 1 segundo
                     setTimeout(() => {
                         this.removeChild(buttonsContainer);
                         sound.stopAll();
+
                         if (this.counter > 0) {
                             generarPregunta();
                         }
@@ -123,9 +132,10 @@ export class SongGame_Quiz extends Container implements IScene {
                         if (this.counter < 0) {
                             const button1 = new SongButton("Siguiente nivel", 500);
                             button1.position.set(Manager.width / 2, 1005)
+
+                            // define cual es el puzzle del nivel siguiente
                             button1.on("pointerup", () => {
                                 if (levels[Manager.currentLevel + 1].isPuzzle) {
-                                    button1.on("pointertap", () => {
                                         sound.stopAll();
                                         Manager.changeScene(
                                             new SongGame_Puzzle(
@@ -134,35 +144,31 @@ export class SongGame_Quiz extends Container implements IScene {
                                         sound.play(
                                             levels[Manager.currentLevel + 1].song.audio);
                                         Manager.currentLevel += 1;
-                                        console.log(Manager.currentLevel);
-                                    });
                                 }
                                 if (!levels[Manager.currentLevel + 1].isPuzzle) {
-                                    button1.on("pointertap", () => {
                                         sound.stopAll();
                                         Manager.changeScene(
                                             new SongGame_Quiz(
                                                 levels[Manager.currentLevel + 1].options,
                                                 levels[Manager.currentLevel + 1].difficulty));
                                         Manager.currentLevel += 1;
-                                        console.log(Manager.currentLevel);
-                                    });
                                 }
                             })
+
                             this.addChild(button1);
                             this.removeChild(soundWave);
 
                             this.texty = new Text(
                                 `¡NIVEL COMPLETADO!\n\nRespuestas correctas: ${this.counterCorrect}\n\nRespuestas Incorrectas: ${this.counterWrong}`,
                                 {
-                                fontFamily: "Montserrat ExtraBold",
-                                fill: 0xFFFFFF,
-                                align: "center",
-                                fontSize: 40,
-                                lineHeight: 39
-                            });
+                                    fontFamily: "Montserrat ExtraBold",
+                                    fill: 0xFFFFFF,
+                                    align: "center",
+                                    fontSize: 40,
+                                    lineHeight: 39
+                                });
                             this.texty.anchor.set(0.5);
-                            this.texty.position.set(Manager.width/2,700)
+                            this.texty.position.set(Manager.width / 2, 700)
                             this.addChild(this.texty);
                             sound.play("Cheer");
 
@@ -174,39 +180,27 @@ export class SongGame_Quiz extends Container implements IScene {
                 buttonsContainer.addChild(button);
                 button.name = `button${i}`;
             });
-
-            console.log(cancionCorrecta);
-
+            //END opciones.forEach
         }
+        // END funcion generarPregunta
 
-        // Función para generar números enteros aleatorios
         function getRandomInteger(min: number, max: number): number {
             return Math.round(Math.random() * (max - min) + min);
         }
 
-        // Genera una pregunta
         generarPregunta();
-
-
     }
 
 
-
-
+    // UPDATE ANIMACION NIVEL COMPLEADO
     currentTime = 0; // Tiempo actual para el cálculo de la escala
-
     update(deltaTime: number, _deltaFrame: number): void {
-
         const scaleMin = 0.97; // Escala mínima del objeto
         const scaleMax = 1.03; // Escala máxima del objeto
         const beatDuration = 800; // Duración de un latido en milisegundos
-
         this.currentTime += deltaTime;
-
         const t = (this.currentTime % beatDuration) / beatDuration;
         const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
-
         this.texty.scale.set(scale);
     }
-
 }

@@ -37,7 +37,7 @@ export class Curso_MainMenu extends Container implements IScene {
 
         this.button0 = new SongButton("Regresar al inicio", 500);
         this.button0.position.set(Manager.width / 2, 130);
-        this.button0.on("pointertap", () => {
+        this.button0.on("pointerup", () => {
             sound.stopAll();
             Manager.changeScene(new Curso_MainMenu());
         });
@@ -45,7 +45,7 @@ export class Curso_MainMenu extends Container implements IScene {
         const createButton = (text: string, y: number, scene: any) => {
             const button = new SongButton(text, 500);
             button.position.set(Manager.width / 2, y);
-            button.on("pointertap", () => {
+            button.on("pointerup", () => {
                 if (this.isDragging) {
                     const newScene = new scene();
                     Manager.changeScene(newScene);
@@ -58,7 +58,7 @@ export class Curso_MainMenu extends Container implements IScene {
 
         const button1 = new SongButton("Song game proyect\nSanta Fe Rock Quiz", 500);
         button1.position.set(Manager.width / 2, 350);
-        button1.on("pointertap", () => {
+        button1.on("pointerup", () => {
             if (this.isDragging) {
                 const newScene = new SongGame_Title();
                 Manager.changeScene(newScene);

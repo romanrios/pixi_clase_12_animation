@@ -9,31 +9,25 @@ import { SongGame_Quiz } from "./SongGame_Quiz";
 
 export class SongGame_Puzzle extends Container implements IScene {
 
-    public currentLevel: number;
-
-    private imgSong: Sprite[];
     private isImageComplete: boolean;
-    button1: SongButton;
     private isAnimating: boolean = false
-
     private specialPieceIndex: number;
+    private imgSong: Sprite[];
+    button1: SongButton;
 
-    constructor(img: any, difficulty: any) {
+    constructor(img: string, difficulty: number) {
         super();
 
-        this.currentLevel = 0
-
+        // background + text
         const background = Sprite.from("BlackWall");
         this.addChild(background);
-
         this.button1 = new SongButton("Volver al selector", 500);
         this.addChild(this.button1);
         this.button1.position.set(Manager.width / 2, 130)
-        this.button1.on("pointertap", () => {
+        this.button1.on("pointerup", () => {
             sound.stopAll();
             Manager.changeScene(new SongGame_LevelSelector)
         });
-
         const texty = new Text("ESCUCHÁ Y RECORDÁ\nEL NOMBRE DEL INTÉRPRETE", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
@@ -43,19 +37,25 @@ export class SongGame_Puzzle extends Container implements IScene {
             letterSpacing: 7
         });
         texty.anchor.set(0.5);
-        texty.position.set(Manager.width/2,290)
+        texty.position.set(Manager.width / 2, 290)
         this.addChild(texty);
 
 
-        const texture = Texture.from(img);
 
+
+
+
+
+
+
+        // Dividir la imagen en piezas
+        const texture = Texture.from(img);
         const numPiecesX = difficulty; // Número de piezas en el eje X
         const numPiecesY = difficulty; // Número de piezas en el eje Y
         const pieceWidth = texture.width / numPiecesX; // Ancho de cada pieza
         const pieceHeight = texture.height / numPiecesY; // Alto de cada pieza
         const pieces: Texture[] = [];
 
-        // Dividir la imagen en piezas
         for (let y = 0; y < numPiecesY; y++) {
             for (let x = 0; x < numPiecesX; x++) {
                 const pieceTexture = new Texture(
@@ -68,6 +68,9 @@ export class SongGame_Puzzle extends Container implements IScene {
                 pieces.push(pieceTexture);
             }
         }
+
+
+
 
         this.imgSong = pieces.map((pieceTexture, index) => {
             const sprite = new Sprite(pieceTexture);
@@ -88,21 +91,21 @@ export class SongGame_Puzzle extends Container implements IScene {
             const randomRotation = Math.floor(Math.random() * 4) * 90;
             sprite.angle = randomRotation;
 
-            sprite.on("pointerdown", () => {
 
+            // función al clickear una pieza del puzzle
+            sprite.on("pointerdown", () => {
                 sound.play("Pip");
 
                 if (this.isAnimating) {
-                    return; // Evitar que se active durante la animación
+                    return; // previene activación del botón durante animación
                 }
+                this.isAnimating = true; // Marcar que se está realizando una animación
 
+                // activa animación de rotación
                 const targetRotation = sprite.angle + 90;
                 const duration = 0.1; // Duración de la animación en segundos
                 const frames = 60; // Número de fotogramas para la animación
-                const increment = (targetRotation - sprite.angle) / frames;
-
-                this.isAnimating = true; // Marcar que se está realizando una animación
-
+                const increment = (targetRotation - sprite.angle) / frames;                
                 if (index === this.specialPieceIndex) {
                     const linkedPiece = this.getLinkedPiece(sprite);
                     this.animateRotation(sprite, targetRotation, duration, frames, increment);
@@ -112,43 +115,42 @@ export class SongGame_Puzzle extends Container implements IScene {
                 }
             });
 
-
-
-            sprite.on("pointerover", () => {
-                sprite.tint = 0xffdfc2;
-            });
-
-            sprite.on("pointerout", () => {
-                sprite.tint = 0xFFFFFF;
-            });
-
-            sprite.on("pointerupoutside", () => {
-                sprite.tint = 0xFFFFFF;
-            });
+            sprite.on("mouseover", () => { sprite.tint = 0xffdfc2 })
+                .on("mouseout", () => { sprite.tint = 0xFFFFFF })
 
             return sprite;
         });
+        // END this.imgSong = pieces.map((pieceTexture, index)
 
         this.addChild(...this.imgSong);
-
         this.isImageComplete = false;
-
-
-
-
-
         this.specialPieceIndex = Math.floor(Math.random() * this.imgSong.length);
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
 
 
     update(_deltaTime: number, _deltaFrame: number): void {
         // update
     }
+
+
+
+
+
+
+
+
+
+
+
 
     private checkComplete(): void {
         const tolerance = 5; // Rango de tolerancia en grados
@@ -163,43 +165,34 @@ export class SongGame_Puzzle extends Container implements IScene {
     private puzzleCompleted(): void {
         sound.play("Correct");
         this.disableButtons();
-
         const texty: Text = new Text(
             levels[Manager.currentLevel].song.band,
             {
-            fontFamily: "Montserrat ExtraBold",
-            fill: 0xFFFFFF,
-            align: "center",
-            fontSize: 40,
-            lineHeight: 39
-        });
+                fontFamily: "Montserrat ExtraBold",
+                fill: 0xFFFFFF,
+                align: "center",
+                fontSize: 40,
+                lineHeight: 39
+            });
         texty.anchor.set(0.5);
-        texty.position.set(Manager.width/2,1005)
+        texty.position.set(Manager.width / 2, 1005)
         this.addChild(texty);
-
 
         // Crea botón que lleva al siguiente nivel y actualiza variable currentLevel
         const button1 = new SongButton("Siguiente nivel", 500);
         button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
             if (levels[Manager.currentLevel + 1].isPuzzle) {
-                button1.on("pointertap", () => {
-                    sound.stopAll();
-                    Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel + 1].song.img, levels[Manager.currentLevel + 1].difficulty));
-                    sound.play(levels[Manager.currentLevel + 1].song.audio);
-                    Manager.currentLevel += 1;
-                    console.log(Manager.currentLevel);
-                });
+                sound.stopAll();
+                Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel + 1].song.img, levels[Manager.currentLevel + 1].difficulty));
+                sound.play(levels[Manager.currentLevel + 1].song.audio);
+                Manager.currentLevel += 1;
             }
             if (!levels[Manager.currentLevel + 1].isPuzzle) {
-                button1.on("pointertap", () => {
-                    sound.stopAll();
-                    Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel + 1].options, levels[Manager.currentLevel + 1].difficulty));
-                    Manager.currentLevel += 1;
-                    console.log(Manager.currentLevel);
-                });
+                sound.stopAll();
+                Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel + 1].options, levels[Manager.currentLevel + 1].difficulty));
+                Manager.currentLevel += 1;
             }
-
         })
         this.addChild(button1);
     }
@@ -210,8 +203,6 @@ export class SongGame_Puzzle extends Container implements IScene {
             sprite.eventMode = "none";
         });
     }
-
-
 
 
     private getLinkedPiece(piece: Sprite): Sprite {

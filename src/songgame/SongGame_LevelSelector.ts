@@ -69,13 +69,12 @@ export class SongGame_LevelSelector extends Container implements IScene {
             button.position.set(currentX, currentY);
 
             if (levels.isPuzzle) {
-                button.on("pointertap", () => {
+                button.on("pointerup", () => {
                     if (this.isDragging) {
                         sound.stopAll();
                         Manager.changeScene(new SongGame_Puzzle(levels.song.img, levels.difficulty));
                         sound.play(levels.song.audio);
                         Manager.currentLevel = index;
-                        console.log(Manager.currentLevel);
                     }
                 });
                 this.buttons.push(button);
@@ -83,12 +82,11 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
             if (!levels.isPuzzle) {
                 button.rectangle.tint = 0xF33302;
-                button.on("pointertap", () => {
+                button.on("pointerup", () => {
                     if (this.isDragging) {
                         sound.stopAll();
                         Manager.changeScene(new SongGame_Quiz(levels.options, levels.difficulty));
                         Manager.currentLevel = index;
-                        console.log(Manager.currentLevel);
                     }
                 });
                 this.buttons.push(button);
