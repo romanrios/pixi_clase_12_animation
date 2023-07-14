@@ -1,4 +1,4 @@
-import { Container, Texture, TilingSprite, Text} from "pixi.js";
+import { Container, Texture, TilingSprite, Text } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Player } from "../game/Player";
 import { Platform } from "../game/Platform";
@@ -109,7 +109,7 @@ export class Clase_8 extends Container implements IScene {
 
     public update(deltaTime: number, _deltaFrame: number) {
 
-        this.timePassed += deltaTime;        
+        this.timePassed += deltaTime;
 
         if (this.timePassed > (2500 * 250 / this.gameSpeed)) {
 
@@ -124,8 +124,8 @@ export class Clase_8 extends Container implements IScene {
 
         this.playerRobot.update(deltaTime); // update animation
 
-        if (this.playerRobot.y>1280 && !this.gameover){
-            this.text.text = String(this.text.text)+"\nGAME OVER"
+        if (this.playerRobot.y > 1280 && !this.gameover) {
+            this.text.text = String(this.text.text) + "\nGAME OVER"
             this.gameover = true;
         }
 
@@ -135,8 +135,8 @@ export class Clase_8 extends Container implements IScene {
             const overlap = checkCollision(this.playerRobot, platform);
             if (overlap != null) {
                 this.playerRobot.separate(overlap, platform.position);
-                this.score ++;
-                this.text.text = this.score                
+                this.score++;
+                this.text.text = this.score
             }
 
             if (platform.getHitbox().right < 0) {
@@ -146,7 +146,10 @@ export class Clase_8 extends Container implements IScene {
 
         this.platforms = this.platforms.filter((elem) => !elem.destroyed);
 
-        this.bg.tilePosition.x += -this.gameSpeed * deltaTime / 1000 * 0.9;
+        
+
+
+        this.bg.tilePosition.x += (-this.gameSpeed * deltaTime / 1000 * 0.9) %  2240
 
 
         // // limit vertical
@@ -159,3 +162,6 @@ export class Clase_8 extends Container implements IScene {
     }
 
 }
+
+
+
