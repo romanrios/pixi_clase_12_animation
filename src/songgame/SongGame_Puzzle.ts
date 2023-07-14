@@ -187,8 +187,7 @@ export class SongGame_Puzzle extends Container implements IScene {
                 Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel + 1].song.img, levels[Manager.currentLevel + 1].difficulty));
                 sound.play(levels[Manager.currentLevel + 1].song.audio);
                 Manager.currentLevel += 1;
-            }
-            if (!levels[Manager.currentLevel + 1].isPuzzle) {
+            } else {
                 sound.stopAll();
                 Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel + 1].options, levels[Manager.currentLevel + 1].difficulty));
                 Manager.currentLevel += 1;
