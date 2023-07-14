@@ -60,12 +60,6 @@ export class Clase_6 extends Container implements IScene {
         this.addChild(this.physRobot)
         this.physRobot.addChild(this.robotAnimated);
 
-        // const auxZero = new Graphics();
-        // auxZero.beginFill(0xFF00FF);
-        // auxZero.drawCircle(0, 0, 10);
-        // auxZero.endFill();
-        // this.physRobot.addChild(auxZero);
-
     }
 
 

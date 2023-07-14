@@ -40,20 +40,20 @@ export class Player extends PhysicsContainer implements IHitbox {
         this.robotAnimated.scale.set(Player.SCALE);
         this.robotAnimated.anchor.set(0.5, 1);
 
-        const auxZero = new Graphics();
-        auxZero.beginFill(0xFF00FF);
-        auxZero.drawCircle(0, 0, 10);
-        auxZero.endFill();
+        // const auxZero = new Graphics();
+        // auxZero.beginFill(0xFF00FF);
+        // auxZero.drawCircle(0, 0, 10);
+        // auxZero.endFill();
 
         this.hitbox = new Graphics();
-        this.hitbox.beginFill(0xFF00FF, 0.3);
+        this.hitbox.beginFill(0xFF00FF, 0.0001);
         this.hitbox.drawRect(0, -140, 90, 140);
         this.hitbox.endFill;
         this.hitbox.pivot.x = this.hitbox.width / 2;
 
 
         this.addChild(this.robotAnimated);
-        this.addChild(auxZero);
+        //this.addChild(auxZero);
         this.addChild(this.hitbox);
 
         this.acceleration.y = Player.GRAVITY;
@@ -88,7 +88,7 @@ export class Player extends PhysicsContainer implements IHitbox {
             this.speed.x = -Player.MOVE_SPEED;
             this.robotAnimated.scale.x = -Player.SCALE;
         }
-        // reemplazado por Keyboard.up.on ...
+        // Reemplazado por  Keyboard.up.on ...
         // else if{
         //  this.speed.x = 0;
         //}  
@@ -96,9 +96,17 @@ export class Player extends PhysicsContainer implements IHitbox {
         // if (Keyboard.state.get("ArrowUp")) {
         //     this.jump();
         // }
+
+
+        // Detiene animación robot cuando no se mueve
+        // if (this.speed.x === 0){
+        //     this.robotAnimated.animationSpeed = 0;
+        // } else {
+        //     this.robotAnimated.animationSpeed = 0.2;
+        // }
     }
 
-    // publica para poder acceder desde Clase_7.ts
+    // Pública para poder acceder desde Clase_7.ts
     jump() {
         if (this.canJump) {
             this.canJump = false;
