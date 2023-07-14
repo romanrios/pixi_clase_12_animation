@@ -8,13 +8,20 @@ export class Platform extends Container implements IHitbox {
         super();
 
         const platform = Sprite.from("Platform");
-        this.addChild(platform);
-
+        platform.y = -25
+        this.addChild(platform);                
+        
         this.hitbox = new Graphics();
         this.hitbox.beginFill(0x00FFFF,0.3);
-        this.hitbox.drawRect(0,0,300,50);
+        this.hitbox.drawRect(0,-25,300,50);
         this.hitbox.endFill;
-        this.addChild(this.hitbox);       
+        this.addChild(this.hitbox);
+        
+        const auxZero = new Graphics();
+        auxZero.beginFill(0xFF00FF);
+        auxZero.drawCircle(0, 0, 10);
+        auxZero.endFill();
+        this.addChild(auxZero);
 
     }
 

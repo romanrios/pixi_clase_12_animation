@@ -119,11 +119,11 @@ export class Player extends PhysicsContainer implements IHitbox {
             }
         }
         else {
-            if (this.y > platform.y) {
+            if (this.y < platform.y) {
                 this.y -= overlap.height;
                 this.speed.y = 0;
                 this.canJump = true;
-            } else if (this.y < platform.y) {
+            } else if (this.y > platform.y) {
                 this.y += overlap.height;
             }
         }
