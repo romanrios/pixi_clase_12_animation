@@ -38,7 +38,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
         const texty = new Text("N I V E L E S", {
             fontFamily: "Montserrat ExtraBold",
-            fill: 0xFFFFFF,
+            fill: 0x000000,
             align: "center",
             fontSize: 27,
             lineHeight: 39

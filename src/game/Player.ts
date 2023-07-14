@@ -6,9 +6,10 @@ import { IHitbox } from "./IHitbox";
 export class Player extends PhysicsContainer implements IHitbox {
 
 
-    private static readonly GRAVITY = 600;
+    private static readonly GRAVITY = 1500;
     private static readonly MOVE_SPEED = 350;
     private static readonly SCALE = 1.5;
+    private static readonly JUMP = 900;
 
     public canJump = true;
 
@@ -88,6 +89,12 @@ export class Player extends PhysicsContainer implements IHitbox {
             this.speed.x = -Player.MOVE_SPEED;
             this.robotAnimated.scale.x = -Player.SCALE;
         }
+
+        if (Keyboard.state.get("ArrowDown")) {
+            this.speed.y = 1400;}
+
+
+
         // Reemplazado por  Keyboard.up.on ...
         // else if{
         //  this.speed.x = 0;
@@ -110,7 +117,7 @@ export class Player extends PhysicsContainer implements IHitbox {
     jump() {
         if (this.canJump) {
             this.canJump = false;
-            this.speed.y = -600;
+            this.speed.y = -Player.JUMP;
         }
     }
 
