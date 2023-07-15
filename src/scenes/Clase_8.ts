@@ -148,8 +148,10 @@ export class Clase_8 extends Container implements IScene {
 
         
 
+        this.bg.tilePosition.x %= 2240
+        this.bg.tilePosition.x += (-this.gameSpeed * deltaTime / 1000 * 0.9) 
+        
 
-        this.bg.tilePosition.x += (-this.gameSpeed * deltaTime / 1000 * 0.9) %  2240
 
 
         // // limit vertical
