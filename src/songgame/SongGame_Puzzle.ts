@@ -1,4 +1,4 @@
-import { Container, Rectangle, Sprite, Texture, Text } from "pixi.js";
+import { Container, Rectangle, Sprite, Texture, Text, Graphics } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
@@ -14,6 +14,9 @@ export class SongGame_Puzzle extends Container implements IScene {
     private specialPieceIndex: number;
     private imgSong: Sprite[];
     button1: SongButton;
+    private puzzleContainer: Container;
+
+    private circleMask: Graphics;
 
     constructor(img: string, difficulty: number) {
         super();
@@ -105,7 +108,7 @@ export class SongGame_Puzzle extends Container implements IScene {
                 const targetRotation = sprite.angle + 90;
                 const duration = 0.1; // Duración de la animación en segundos
                 const frames = 60; // Número de fotogramas para la animación
-                const increment = (targetRotation - sprite.angle) / frames;                
+                const increment = (targetRotation - sprite.angle) / frames;
                 if (index === this.specialPieceIndex) {
                     const linkedPiece = this.getLinkedPiece(sprite);
                     this.animateRotation(sprite, targetRotation, duration, frames, increment);
@@ -122,9 +125,22 @@ export class SongGame_Puzzle extends Container implements IScene {
         });
         // END this.imgSong = pieces.map((pieceTexture, index)
 
-        this.addChild(...this.imgSong);
+        this.puzzleContainer = new Container();
+        this.puzzleContainer.pivot.set(360, 660);
+        this.puzzleContainer.position.set(360, 660);
+
+        this.puzzleContainer.addChild(...this.imgSong);
+
+        this.addChild(this.puzzleContainer);
+
         this.isImageComplete = false;
         this.specialPieceIndex = Math.floor(Math.random() * this.imgSong.length);
+
+        this.circleMask = new Graphics();
+        this.circleMask.beginFill(0xFFFFFF,0.00001);
+
+        this.circleMask.drawCircle(360,660,272)
+        this.puzzleContainer.addChild(this.circleMask);
     }
 
 
@@ -138,8 +154,15 @@ export class SongGame_Puzzle extends Container implements IScene {
 
 
     update(_deltaTime: number, _deltaFrame: number): void {
-        // update
+        if (this.isImageComplete) {
+            this.puzzleContainer.angle += 0.1 * _deltaTime;
+        };
+
+
+
+
     }
+
 
 
 
@@ -171,14 +194,14 @@ export class SongGame_Puzzle extends Container implements IScene {
                 fontFamily: "Montserrat ExtraBold",
                 fill: 0xFFFFFF,
                 align: "center",
-                fontSize: 40,
-                lineHeight: 39
+                fontSize: 50,
+                lineHeight: 50,
             });
         texty.anchor.set(0.5);
         texty.position.set(Manager.width / 2, 1005)
         this.addChild(texty);
 
-        // Crea botón que lleva al siguiente nivel y actualiza variable currentLevel
+        // Crear botón que lleva al siguiente nivel y actualiza variable currentLevel
         const button1 = new SongButton("Siguiente nivel", 500);
         button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
@@ -194,6 +217,29 @@ export class SongGame_Puzzle extends Container implements IScene {
             }
         })
         this.addChild(button1);
+
+        // Añadir botón de reproducción central
+        const circleGraphics = new Graphics();
+        circleGraphics.beginFill(0x000000, 0.3);
+        circleGraphics.lineStyle(4, 0xFFFFFF);
+        circleGraphics.drawCircle(0, 0, 60);
+        circleGraphics.endFill;
+        circleGraphics.position.set(Manager.width / 2, 660)
+        this.addChild(circleGraphics);
+        const playIcon = Sprite.from("Next");
+        playIcon.scale.set(0.7);
+        playIcon.anchor.set(0.5);
+        playIcon.x = 5
+        circleGraphics.addChild(playIcon)
+        circleGraphics.eventMode = "static";
+        circleGraphics.cursor = "pointer";
+        circleGraphics.on("pointerup", () => {
+            sound.stopAll(),
+                sound.play(levels[Manager.currentLevel].song.audio)
+        });
+
+        this.puzzleContainer.mask = this.circleMask
+
     }
 
     private disableButtons(): void {
