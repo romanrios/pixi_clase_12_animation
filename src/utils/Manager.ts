@@ -10,14 +10,22 @@ export class Manager {
     private static app: Application;
     private static currentScene: IScene;
 
-    // QUIZGAME Current level variable getter and setter
-    private static _currentLevel: number;
+    // QUIZGAME Current level & score variable getter and setter
+    private static _currentLevel: number = 0;
+    private static _score: number = 0;
 
     public static get currentLevel(): number {
         return Manager._currentLevel;
     }
     public static set currentLevel(value: number) {
         Manager._currentLevel = value;
+    }
+
+    public static get score(): number {
+        return Manager._score;
+    }
+    public static set score(value: number) {
+        Manager._score = value;
     }
     
 

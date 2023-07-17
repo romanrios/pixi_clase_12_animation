@@ -11,7 +11,6 @@ import { SongGame_Title } from "./SongGame_Title";
 export class SongGame_LevelSelector extends Container implements IScene {
 
     private buttons: SongButton[];
-    private button0: SongButton;
     private dragData: any | null;
     private dragStartY: number;
     private isDragging: boolean = false;
@@ -28,26 +27,54 @@ export class SongGame_LevelSelector extends Container implements IScene {
         background2.position.set(0, 2560);
         this.addChild(background2);
 
-        this.button0 = new SongButton("Regresar", 500);
-        this.button0.position.set(Manager.width / 2, 130);
-        this.button0.onpointerup = () => {
+        const levelSelectorBanner = Sprite.from("LevelSelectorBanner");
+        this.addChild(levelSelectorBanner);
+       
+        const backButton = new SongButton("", 110);
+        this.addChild(backButton);
+        backButton.position.set(90, 90)
+        const back = Sprite.from("BackArrow");
+        back.position.set(-30,-28);
+        back.scale.set(0.7,0.7);
+        backButton.addChild(back);
+
+        backButton.onpointerup = () => {
             sound.stopAll();
             Manager.changeScene(new SongGame_Title());
         };
-        this.addChild(this.button0);
+        this.addChild(backButton);
+
+
+
+        // SCORE
+        const star = Sprite.from("Star");
+        star.scale.set(0.6);
+        star.position.set(534,45);
+        this.addChild(star);
+
+        const textScore = new Text(Manager.score, {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 50,
+        });
+        textScore.anchor.set(0.5);
+        textScore.position.set(640,75)
+        this.addChild(textScore);
+
+
+
 
         const texty = new Text("N I V E L E S", {
             fontFamily: "Montserrat ExtraBold",
-            fill: 0x000000,
+            fill: 0xFFFFFF,
             align: "center",
             fontSize: 27,
             lineHeight: 39
         });
         texty.anchor.set(0.5);
-        texty.position.set(Manager.width/2,350)
+        texty.position.set(Manager.width/2,430)
         this.addChild(texty);
-
-
 
         // Calcular posición inicial en x para centrar el grupo de botones
         const buttonWidth = 110;
@@ -57,7 +84,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
         const startX = 120;
         let currentX = startX;
-        let currentY = 500;
+        let currentY = 580;
 
         // Generar los botones alimentados del array "levels"
         this.buttons = [];
@@ -72,9 +99,9 @@ export class SongGame_LevelSelector extends Container implements IScene {
                 button.on("pointerup", () => {
                     if (this.isDragging) {
                         sound.stopAll();
+                        Manager.currentLevel = index;
                         Manager.changeScene(new SongGame_Puzzle(levels.song.img, levels.difficulty));
                         sound.play(levels.song.audio);
-                        Manager.currentLevel = index;
                     }
                 });
                 this.buttons.push(button);
@@ -85,8 +112,8 @@ export class SongGame_LevelSelector extends Container implements IScene {
                 button.on("pointerup", () => {
                     if (this.isDragging) {
                         sound.stopAll();
-                        Manager.changeScene(new SongGame_Quiz(levels.options, levels.difficulty));
                         Manager.currentLevel = index;
+                        Manager.changeScene(new SongGame_Quiz(levels.options, levels.difficulty));
                     }
                 });
                 this.buttons.push(button);

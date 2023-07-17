@@ -10,33 +10,84 @@ import { levels } from "./levels";
 import { SongGame_Puzzle } from "./SongGame_Puzzle";
 
 export class SongGame_Quiz extends Container implements IScene {
-    private quizBackground: Sprite;
-    private button1: SongButton;
+    private bg: Sprite;
     private counter: number;
     private counterCorrect: number;
     private counterWrong: number;
     private texty: Text = new Text;
+    private textScore: Text;
+    private textHelp: Text;
+    private textLevel: Text;
 
     constructor(options: any, level: number) {
         super();
+        
+        // Background + Text help
+        this.bg = Sprite.from("QuizBackground");
+        this.bg.anchor.set(0.5),
+            this.bg.position.set(Manager.width / 2, Manager.height / 2)
+        this.addChild(this.bg);
 
-        this.quizBackground = Sprite.from("QuizBackground");
-        this.quizBackground.anchor.set(0.5),
-            this.quizBackground.position.set(Manager.width / 2, Manager.height / 2)
-        this.addChild(this.quizBackground);
+        this.textHelp = new Text("¿QUIÉN SUENA?", {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 20,
+            lineHeight: 40,
+            letterSpacing: 7
+        });
+        this.textHelp.anchor.set(0.5);
+        this.textHelp.position.set(Manager.width / 2, 290)
+        this.addChild(this.textHelp);
 
-        this.button1 = new SongButton("Volver al selector", 500);
-        this.addChild(this.button1);
-        this.button1.position.set(Manager.width / 2, 130)
-        this.button1.on("pointerup", () => {
+        // UI Score
+        const star = Sprite.from("Star");
+        star.scale.set(0.6);
+        star.position.set(534, 45);
+        this.addChild(star);
+
+        this.textScore = new Text(Manager.score, {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 50,
+        });
+        this.textScore.anchor.set(0.5);
+        this.textScore.position.set(640, 75)
+        this.addChild(this.textScore);    
+
+        // UI Back button
+        const backButton = new SongButton("", 110);
+        this.addChild(backButton);
+        backButton.position.set(90, 90)
+        const back = Sprite.from("BackArrow");
+        back.position.set(-30, -28);
+        back.scale.set(0.7, 0.7);
+        backButton.addChild(back);
+        backButton.on("pointerup", () => {
             sound.stopAll();
             Manager.changeScene(new SongGame_LevelSelector)
         });
 
+        // UI LEVEL
+        const cinta = Sprite.from("Cinta");
+        cinta.position.set(228,103);
+        this.addChild(cinta);
 
-        // FUNCION GENERAR PREGUNTA
+        this.textLevel = new Text(`NIVEL ${levels[Manager.currentLevel].name}`, {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0x000000,
+            align: "center",
+            fontSize: 30,
+        });
+        this.textLevel.anchor.set(0.5);
+        this.textLevel.position.set(360, 136)
+        this.addChild(this.textLevel);
+
+
+        // Función Generar Pregunta
         const NUMERO_OPCIONES = options; // Número total de opciones por pregunta
-        this.counter = 4 -1 // CANTIDAD DE PREGUNTAS !!
+        this.counter = 4 - 1 // CANTIDAD DE PREGUNTAS !!
         this.counterCorrect = 0
         this.counterWrong = 0
         const opcionesCorrectasYaElegidas: number[] = []
@@ -49,7 +100,7 @@ export class SongGame_Quiz extends Container implements IScene {
             let indiceCorrecto = getRandomInteger(0, /*songs.length*/ level - 1);
 
             // Verifica que no se repita y actualiza los arreglos
-            while(opcionesCorrectasYaElegidas.includes(indiceCorrecto)){
+            while (opcionesCorrectasYaElegidas.includes(indiceCorrecto)) {
                 indiceCorrecto = getRandomInteger(0, /*songs.length*/ level - 1);
             }
             opcionesCorrectasYaElegidas.push(indiceCorrecto)
@@ -73,7 +124,7 @@ export class SongGame_Quiz extends Container implements IScene {
             soundWave.alpha = 0.5;
             soundWave.height = 201;
             soundWave.anchor.set(0.5);
-            soundWave.position.set(Manager.width / 2, 350)
+            soundWave.position.set(Manager.width / 2, 388)
             soundWave.eventMode = 'static';
             soundWave.cursor = 'pointer';
             let isPlaying = true;
@@ -105,6 +156,8 @@ export class SongGame_Quiz extends Container implements IScene {
                 button.onpointerup = () => {
 
                     if (opcion === cancionCorrecta) {
+                        Manager.score++;
+                        this.textScore.text=Manager.score;
                         this.counterCorrect += 1;
                         button.setButtonColor(0x00C18C);
                         this.eventMode = "none";
@@ -136,22 +189,22 @@ export class SongGame_Quiz extends Container implements IScene {
                             // define cual es el puzzle del nivel siguiente
                             button1.on("pointerup", () => {
                                 if (levels[Manager.currentLevel + 1].isPuzzle) {
-                                        sound.stopAll();
-                                        Manager.changeScene(
-                                            new SongGame_Puzzle(
-                                                levels[Manager.currentLevel + 1].song.img,
-                                                levels[Manager.currentLevel + 1].difficulty));
-                                        sound.play(
-                                            levels[Manager.currentLevel + 1].song.audio);
-                                        Manager.currentLevel += 1;
+                                    sound.stopAll();
+                                    Manager.currentLevel++;
+                                    Manager.changeScene(
+                                        new SongGame_Puzzle(
+                                            levels[Manager.currentLevel].song.img,
+                                            levels[Manager.currentLevel].difficulty));
+                                    sound.play(
+                                        levels[Manager.currentLevel].song.audio);
                                 }
                                 if (!levels[Manager.currentLevel + 1].isPuzzle) {
-                                        sound.stopAll();
-                                        Manager.changeScene(
-                                            new SongGame_Quiz(
-                                                levels[Manager.currentLevel + 1].options,
-                                                levels[Manager.currentLevel + 1].difficulty));
-                                        Manager.currentLevel += 1;
+                                    sound.stopAll();
+                                    Manager.currentLevel++;
+                                    Manager.changeScene(
+                                        new SongGame_Quiz(
+                                            levels[Manager.currentLevel].options,
+                                            levels[Manager.currentLevel].difficulty));
                                 }
                             })
 

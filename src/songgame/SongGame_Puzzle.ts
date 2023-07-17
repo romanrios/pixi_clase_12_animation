@@ -13,25 +13,24 @@ export class SongGame_Puzzle extends Container implements IScene {
     private isAnimating: boolean = false
     private specialPieceIndex: number;
     private imgSong: Sprite[];
-    button1: SongButton;
     private puzzleContainer: Container;
 
     private circleMask: Graphics;
+    private imgComplete: any
+    private textScore: Text;
+    private textHelp: Text;
+    private textLevel: Text;
 
     constructor(img: string, difficulty: number) {
         super();
 
-        // background + text
+        this.imgComplete = img;
+
+        // background + text help
         const background = Sprite.from("BlackWall");
         this.addChild(background);
-        this.button1 = new SongButton("Volver al selector", 500);
-        this.addChild(this.button1);
-        this.button1.position.set(Manager.width / 2, 130)
-        this.button1.on("pointerup", () => {
-            sound.stopAll();
-            Manager.changeScene(new SongGame_LevelSelector)
-        });
-        const texty = new Text("ESCUCHÁ Y RECORDÁ\nEL NOMBRE DEL INTÉRPRETE", {
+
+        this.textHelp = new Text("COMPLETÁ EL ROMPECABEZAS", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
             align: "center",
@@ -39,11 +38,55 @@ export class SongGame_Puzzle extends Container implements IScene {
             lineHeight: 40,
             letterSpacing: 7
         });
-        texty.anchor.set(0.5);
-        texty.position.set(Manager.width / 2, 290)
-        this.addChild(texty);
+        this.textHelp.anchor.set(0.5);
+        this.textHelp.position.set(Manager.width / 2, 290)
+        this.addChild(this.textHelp);
 
+        // UI Back button
+        const backButton = new SongButton("", 110);
+        this.addChild(backButton);
+        backButton.position.set(90, 90)
+        const back = Sprite.from("BackArrow");
+        back.position.set(-30, -28);
+        back.scale.set(0.7, 0.7);
+        backButton.addChild(back);
+        backButton.on("pointerup", () => {
+            sound.stopAll();
+            Manager.changeScene(new SongGame_LevelSelector)
+        });
 
+        // UI SCORE
+        const star = Sprite.from("Star");
+        star.scale.set(0.6);
+        star.position.set(534, 45);
+        this.addChild(star);
+
+        this.textScore = new Text(Manager.score, {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0xFFFFFF,
+            align: "center",
+            fontSize: 50,
+        });
+        this.textScore.anchor.set(0.5);
+        this.textScore.position.set(640, 75)
+        this.addChild(this.textScore);
+
+        // UI LEVEL
+        const cinta = Sprite.from("Cinta");
+        cinta.position.set(228,103);
+        this.addChild(cinta);
+
+        this.textLevel = new Text(`NIVEL ${levels[Manager.currentLevel].name}`, {
+            fontFamily: "Montserrat ExtraBold",
+            fill: 0x000000,
+            align: "center",
+            fontSize: 30,
+        });
+        this.textLevel.anchor.set(0.5);
+        this.textLevel.position.set(360, 136)
+        this.addChild(this.textLevel);
+
+        
 
 
 
@@ -137,10 +180,10 @@ export class SongGame_Puzzle extends Container implements IScene {
         this.specialPieceIndex = Math.floor(Math.random() * this.imgSong.length);
 
         this.circleMask = new Graphics();
-        this.circleMask.beginFill(0xFFFFFF,0.00001);
+        this.circleMask.beginFill(0xFFFFFF, 0.00001);
 
-        this.circleMask.drawCircle(360,660,272)
-        this.puzzleContainer.addChild(this.circleMask);
+        this.circleMask.drawCircle(360, 660, 272)
+        this.addChild(this.circleMask);
     }
 
 
@@ -186,6 +229,9 @@ export class SongGame_Puzzle extends Container implements IScene {
     }
 
     private puzzleCompleted(): void {
+        this.textHelp.text = "ESCUCHÁ Y RECORDÁ\nEL NOMBRE DEL INTÉRPRETE";
+        Manager.score++;
+        this.textScore.text=Manager.score;
         sound.play("Correct");
         this.disableButtons();
         const texty: Text = new Text(
@@ -205,15 +251,15 @@ export class SongGame_Puzzle extends Container implements IScene {
         const button1 = new SongButton("Siguiente nivel", 500);
         button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
-            if (levels[Manager.currentLevel + 1].isPuzzle) {
+            if (levels[Manager.currentLevel+1].isPuzzle) {
                 sound.stopAll();
-                Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel + 1].song.img, levels[Manager.currentLevel + 1].difficulty));
-                sound.play(levels[Manager.currentLevel + 1].song.audio);
-                Manager.currentLevel += 1;
+                Manager.currentLevel++;
+                Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel].song.img, levels[Manager.currentLevel].difficulty));
+                sound.play(levels[Manager.currentLevel].song.audio);
             } else {
                 sound.stopAll();
-                Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel + 1].options, levels[Manager.currentLevel + 1].difficulty));
-                Manager.currentLevel += 1;
+                Manager.currentLevel++;
+                Manager.changeScene(new SongGame_Quiz(levels[Manager.currentLevel].options, levels[Manager.currentLevel].difficulty));
             }
         })
         this.addChild(button1);
@@ -238,7 +284,17 @@ export class SongGame_Puzzle extends Container implements IScene {
                 sound.play(levels[Manager.currentLevel].song.audio)
         });
 
-        this.puzzleContainer.mask = this.circleMask
+        // mask
+
+        this.puzzleContainer.removeChildren();
+        const imgComplete = Sprite.from(this.imgComplete);
+        imgComplete.anchor.set(0.5);
+        imgComplete.position.set(360, 660);
+        this.puzzleContainer.addChild(imgComplete);
+        this.puzzleContainer.mask = this.circleMask;
+
+
+
 
     }
 
