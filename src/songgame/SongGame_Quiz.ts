@@ -206,7 +206,7 @@ export class SongGame_Quiz extends Container implements IScene {
 
                         if (this.counter < 0) {
                             Manager.levelsAvailable[Manager.currentLevel+1]=true;
-                            const button1 = new SongButton("Niveles", 500);
+                            const button1 = new SongButton("Siguiente", 500);
                             button1.setButtonColor(0x00C18C);
                             button1.position.set(Manager.width / 2, 1005)
 

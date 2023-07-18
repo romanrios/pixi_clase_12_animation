@@ -1,4 +1,4 @@
-import { Assets, Container, Sprite } from "pixi.js";
+import { Assets, Container, Graphics, Sprite } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Manager } from "../utils/Manager";
 import { SongButton } from "../UI/SongButton";
@@ -8,6 +8,7 @@ import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
 
 export class SongGame_Title extends Container implements IScene {
     private titleLogo: Sprite;
+    private buttonHighlight: Graphics;
 
     constructor() {
         super();
@@ -34,13 +35,16 @@ export class SongGame_Title extends Container implements IScene {
 
         const button = new SongButton("Jugar", 500);
         button.position.set(Manager.width / 2, 1050);
-        button.setButtonColor(0x00C18C);
         this.addChild(button);
         button.on("pointerup",() =>{
             const newScene = new SongGame_LevelSelector();
             Manager.changeScene(newScene);
         })
 
+        this.buttonHighlight = new Graphics();
+        this.buttonHighlight.beginFill(0xFFFFFF);
+        this.buttonHighlight.drawRect(-250,-55,500,110);
+        button.addChild(this.buttonHighlight);
 
     }
 
@@ -58,5 +62,8 @@ export class SongGame_Title extends Container implements IScene {
         const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
 
         this.titleLogo.scale.set(scale);
+
+        this.buttonHighlight.alpha =  Math.abs(Math.sin(t * Math.PI)) * 0.3
+
     }
 }
