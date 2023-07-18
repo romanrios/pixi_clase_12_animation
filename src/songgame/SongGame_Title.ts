@@ -34,6 +34,7 @@ export class SongGame_Title extends Container implements IScene {
 
         const button = new SongButton("Jugar", 500);
         button.position.set(Manager.width / 2, 1050);
+        button.setButtonColor(0x00C18C);
         this.addChild(button);
         button.on("pointerup",() =>{
             const newScene = new SongGame_LevelSelector();

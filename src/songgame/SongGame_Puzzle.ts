@@ -30,7 +30,7 @@ export class SongGame_Puzzle extends Container implements IScene {
         const background = Sprite.from("BlackWall");
         this.addChild(background);
 
-        this.textHelp = new Text("COMPLETÁ EL ROMPECABEZAS", {
+        this.textHelp = new Text("RESOLVÉ EL ROMPECABEZAS", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
             align: "center",
@@ -229,7 +229,7 @@ export class SongGame_Puzzle extends Container implements IScene {
     }
 
     private puzzleCompleted(): void {
-        this.textHelp.text = "ESCUCHÁ Y RECORDÁ\nEL NOMBRE DEL INTÉRPRETE";
+        this.textHelp.text = "ESCUCHÁ Y RECORDÁ\nEL NOMBRE DE LA BANDA";
         Manager.score++;
         this.textScore.text=Manager.score;
         sound.play("Correct");
@@ -249,6 +249,7 @@ export class SongGame_Puzzle extends Container implements IScene {
 
         // Crear botón que lleva al siguiente nivel y actualiza variable currentLevel
         const button1 = new SongButton("Siguiente nivel", 500);
+        button1.setButtonColor(0x00C18C);
         button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
             if (levels[Manager.currentLevel+1].isPuzzle) {

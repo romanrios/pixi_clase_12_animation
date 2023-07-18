@@ -14,6 +14,8 @@ export class SongGame_LevelSelector extends Container implements IScene {
     private dragData: any | null;
     private dragStartY: number;
     private isDragging: boolean = false;
+    private rayo2: Sprite;
+    private rayo1: Sprite;
 
     constructor() {
         super();
@@ -62,9 +64,6 @@ export class SongGame_LevelSelector extends Container implements IScene {
         textScore.position.set(640,75)
         this.addChild(textScore);
 
-
-
-
         const texty = new Text("N I V E L E S", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
@@ -73,8 +72,22 @@ export class SongGame_LevelSelector extends Container implements IScene {
             lineHeight: 39
         });
         texty.anchor.set(0.5);
-        texty.position.set(Manager.width/2,430)
+        texty.position.set(Manager.width/2,430);
         this.addChild(texty);
+
+        this.rayo1 = Sprite.from("Rayo2");
+        this.rayo1.position.set(80,405);
+        this.addChild(this.rayo1);
+
+        this.rayo2 = Sprite.from("Rayo2");
+        this.rayo2.position.set(640,405);
+        this.rayo2.scale.x=-1;
+        this.addChild(this.rayo2);
+
+
+
+
+
 
         // Calcular posición inicial en x para centrar el grupo de botones
         const buttonWidth = 110;
@@ -141,8 +154,22 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
     }
 
-    update(_deltaTime: number, _deltaFrame: number): void {
-        // update
+    currentTime = 0; // Tiempo actual para el cálculo de la escala
+
+    update(deltaTime: number, _deltaFrame: number): void {
+
+        const scaleMin = 0.8; // Escala mínima del objeto
+        const scaleMax = 1; // Escala máxima del objeto
+        const beatDuration = 800; // Duración de un latido en milisegundos
+
+        this.currentTime += deltaTime;
+
+        const t = (this.currentTime % beatDuration) / beatDuration;
+        const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
+
+        this.rayo1.scale.x = scale;
+        this.rayo2.scale.x = -scale;
+
     }
 
     // dragging

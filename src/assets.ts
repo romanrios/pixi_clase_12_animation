@@ -53,6 +53,7 @@ export const manifest: ResolverManifest = {
             assets:
             {
                 // Montserrat: "./songgame/Montserrat-ExtraBold.ttf",
+                Rayo2: "./songgame/rayo2.svg",
                 Cinta: "./songgame/cinta.png",
                 Star: "./songgame/star.svg",
                 LevelSelectorBanner: "./songgame/levelselectorbanner.png",

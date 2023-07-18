@@ -28,7 +28,7 @@ export class SongGame_Quiz extends Container implements IScene {
             this.bg.position.set(Manager.width / 2, Manager.height / 2)
         this.addChild(this.bg);
 
-        this.textHelp = new Text("¿QUIÉN SUENA?", {
+        this.textHelp = new Text("ADIVINÁ LA BANDA", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
             align: "center",
@@ -184,6 +184,7 @@ export class SongGame_Quiz extends Container implements IScene {
 
                         if (this.counter < 0) {
                             const button1 = new SongButton("Siguiente nivel", 500);
+                            button1.setButtonColor(0x00C18C);
                             button1.position.set(Manager.width / 2, 1005)
 
                             // define cual es el puzzle del nivel siguiente
@@ -210,6 +211,7 @@ export class SongGame_Quiz extends Container implements IScene {
 
                             this.addChild(button1);
                             this.removeChild(soundWave);
+                            this.removeChild(this.textHelp);
 
                             this.texty = new Text(
                                 `¡NIVEL COMPLETADO!\n\nRespuestas correctas: ${this.counterCorrect}\n\nRespuestas Incorrectas: ${this.counterWrong}`,
