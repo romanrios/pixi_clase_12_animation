@@ -1,4 +1,4 @@
-import { Container, Sprite, Text } from "pixi.js";
+import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { SongButton } from "../UI/SongButton";
 import { Manager } from "../utils/Manager";
@@ -16,6 +16,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
     private isDragging: boolean = false;
     private rayo2: Sprite;
     private rayo1: Sprite;
+    private buttonHighlight: Graphics;
 
     constructor() {
         super();
@@ -31,13 +32,13 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
         const levelSelectorBanner = Sprite.from("LevelSelectorBanner");
         this.addChild(levelSelectorBanner);
-       
+
         const backButton = new SongButton("", 110);
         this.addChild(backButton);
         backButton.position.set(90, 90)
         const back = Sprite.from("BackArrow");
-        back.position.set(-30,-28);
-        back.scale.set(0.7,0.7);
+        back.position.set(-30, -28);
+        back.scale.set(0.7, 0.7);
         backButton.addChild(back);
 
         backButton.onpointerup = () => {
@@ -51,7 +52,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
         // SCORE
         const star = Sprite.from("Star");
         star.scale.set(0.6);
-        star.position.set(534,45);
+        star.position.set(534, 45);
         this.addChild(star);
 
         const textScore = new Text(Manager.score, {
@@ -61,7 +62,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
             fontSize: 50,
         });
         textScore.anchor.set(0.5);
-        textScore.position.set(640,75)
+        textScore.position.set(640, 75)
         this.addChild(textScore);
 
         const texty = new Text("N I V E L E S", {
@@ -72,17 +73,22 @@ export class SongGame_LevelSelector extends Container implements IScene {
             lineHeight: 39
         });
         texty.anchor.set(0.5);
-        texty.position.set(Manager.width/2,430);
+        texty.position.set(Manager.width / 2, 430);
         this.addChild(texty);
 
         this.rayo1 = Sprite.from("Rayo2");
-        this.rayo1.position.set(80,405);
+        this.rayo1.position.set(80, 405);
         this.addChild(this.rayo1);
 
         this.rayo2 = Sprite.from("Rayo2");
-        this.rayo2.position.set(640,405);
-        this.rayo2.scale.x=-1;
+        this.rayo2.position.set(640, 405);
+        this.rayo2.scale.x = -1;
         this.addChild(this.rayo2);
+
+        this.buttonHighlight = new Graphics();
+        this.buttonHighlight.beginFill(0xFFFFFF);
+        this.buttonHighlight.drawRect(-55,-55,110,110);
+
 
 
 
@@ -107,6 +113,18 @@ export class SongGame_LevelSelector extends Container implements IScene {
             button.width = buttonWidth;
             button.height = buttonHeight;
             button.position.set(currentX, currentY);
+
+            //  Verifica si el nivel está dispónible
+            if (!Manager.levelsAvailable[index]) {
+                button.alpha = 0.3;
+                button.eventMode = "none";
+            }
+
+            if (Manager.levelsAvailable[index] && !Manager.levelsAvailable[index + 1]) {
+                button.addChild(this.buttonHighlight);
+
+            }
+
 
             if (levels.isPuzzle) {
                 button.on("pointerup", () => {
@@ -158,8 +176,8 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
     update(deltaTime: number, _deltaFrame: number): void {
 
-        const scaleMin = 0.8; // Escala mínima del objeto
-        const scaleMax = 1; // Escala máxima del objeto
+        const scaleMin = 0.9; // Escala mínima del objeto
+        const scaleMax = 1.1; // Escala máxima del objeto
         const beatDuration = 800; // Duración de un latido en milisegundos
 
         this.currentTime += deltaTime;
@@ -170,6 +188,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
         this.rayo1.scale.x = scale;
         this.rayo2.scale.x = -scale;
 
+        this.buttonHighlight.alpha =  Math.abs(Math.sin(t * Math.PI)) * 0.3
     }
 
     // dragging

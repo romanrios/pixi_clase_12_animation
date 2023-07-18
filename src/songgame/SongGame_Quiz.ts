@@ -7,7 +7,6 @@ import '@pixi/gif';
 import { songs } from "./songs";
 import { SongGame_LevelSelector } from "./SongGame_LevelSelector";
 import { levels } from "./levels";
-import { SongGame_Puzzle } from "./SongGame_Puzzle";
 
 export class SongGame_Quiz extends Container implements IScene {
     private bg: Sprite;
@@ -22,6 +21,16 @@ export class SongGame_Quiz extends Container implements IScene {
     constructor(options: any, level: number) {
         super();
         
+
+
+
+
+
+
+
+
+
+
         // Background + Text help
         this.bg = Sprite.from("QuizBackground");
         this.bg.anchor.set(0.5),
@@ -83,6 +92,16 @@ export class SongGame_Quiz extends Container implements IScene {
         this.textLevel.anchor.set(0.5);
         this.textLevel.position.set(360, 136)
         this.addChild(this.textLevel);
+
+
+
+
+
+
+
+
+
+
 
 
         // Función Generar Pregunta
@@ -183,30 +202,32 @@ export class SongGame_Quiz extends Container implements IScene {
                         this.eventMode = "static"
 
                         if (this.counter < 0) {
-                            const button1 = new SongButton("Siguiente nivel", 500);
+                            Manager.levelsAvailable[Manager.currentLevel+1]=true;
+                            const button1 = new SongButton("Niveles", 500);
                             button1.setButtonColor(0x00C18C);
                             button1.position.set(Manager.width / 2, 1005)
 
                             // define cual es el puzzle del nivel siguiente
                             button1.on("pointerup", () => {
-                                if (levels[Manager.currentLevel + 1].isPuzzle) {
-                                    sound.stopAll();
-                                    Manager.currentLevel++;
-                                    Manager.changeScene(
-                                        new SongGame_Puzzle(
-                                            levels[Manager.currentLevel].song.img,
-                                            levels[Manager.currentLevel].difficulty));
-                                    sound.play(
-                                        levels[Manager.currentLevel].song.audio);
-                                }
-                                if (!levels[Manager.currentLevel + 1].isPuzzle) {
-                                    sound.stopAll();
-                                    Manager.currentLevel++;
-                                    Manager.changeScene(
-                                        new SongGame_Quiz(
-                                            levels[Manager.currentLevel].options,
-                                            levels[Manager.currentLevel].difficulty));
-                                }
+                                Manager.changeScene(new SongGame_LevelSelector);
+                                // if (levels[Manager.currentLevel + 1].isPuzzle) {
+                                //     sound.stopAll();
+                                //     Manager.currentLevel++;
+                                //     Manager.changeScene(
+                                //         new SongGame_Puzzle(
+                                //             levels[Manager.currentLevel].song.img,
+                                //             levels[Manager.currentLevel].difficulty));
+                                //     sound.play(
+                                //         levels[Manager.currentLevel].song.audio);
+                                // }
+                                // if (!levels[Manager.currentLevel + 1].isPuzzle) {
+                                //     sound.stopAll();
+                                //     Manager.currentLevel++;
+                                //     Manager.changeScene(
+                                //         new SongGame_Quiz(
+                                //             levels[Manager.currentLevel].options,
+                                //             levels[Manager.currentLevel].difficulty));
+                                // }
                             })
 
                             this.addChild(button1);
@@ -245,6 +266,16 @@ export class SongGame_Quiz extends Container implements IScene {
 
         generarPregunta();
     }
+    
+
+
+
+
+
+
+
+
+
 
 
     // UPDATE ANIMACION NIVEL COMPLEADO

@@ -229,6 +229,7 @@ export class SongGame_Puzzle extends Container implements IScene {
     }
 
     private puzzleCompleted(): void {
+        Manager.levelsAvailable[Manager.currentLevel+1]=true;
         this.textHelp.text = "ESCUCHÁ Y RECORDÁ\nEL NOMBRE DE LA BANDA";
         Manager.score++;
         this.textScore.text=Manager.score;
