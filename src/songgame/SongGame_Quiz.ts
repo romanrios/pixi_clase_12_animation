@@ -17,6 +17,7 @@ export class SongGame_Quiz extends Container implements IScene {
     private textScore: Text;
     private textHelp: Text;
     private textLevel: Text;
+    private star: Sprite;
 
     constructor(options: any, level: number) {
         super();
@@ -49,11 +50,12 @@ export class SongGame_Quiz extends Container implements IScene {
         this.textHelp.position.set(Manager.width / 2, 290)
         this.addChild(this.textHelp);
 
-        // UI Score
-        const star = Sprite.from("Star");
-        star.scale.set(0.6);
-        star.position.set(534, 45);
-        this.addChild(star);
+        // UI SCORE
+        this.star = Sprite.from("Star");
+        this.star.anchor.set(0.5);
+        this.star.scale.set(0.6);
+        this.star.position.set(550, 75);
+        this.addChild(this.star);
 
         this.textScore = new Text(Manager.score, {
             fontFamily: "Montserrat ExtraBold",
@@ -175,6 +177,7 @@ export class SongGame_Quiz extends Container implements IScene {
                 button.onpointerup = () => {
 
                     if (opcion === cancionCorrecta) {
+                        this.starRotation();
                         Manager.score++;
                         this.textScore.text=Manager.score;
                         this.counterCorrect += 1;
@@ -289,4 +292,23 @@ export class SongGame_Quiz extends Container implements IScene {
         const scale = scaleMin + Math.abs(Math.sin(t * Math.PI)) * (scaleMax - scaleMin);
         this.texty.scale.set(scale);
     }
+
+
+private starRotation(): void {
+    const targetRotation = this.star.rotation + Math.PI * 2; // Giro completo de 360 grados en radianes
+    const frames = 60; // Número de fotogramas para completar la animación
+    const increment = (targetRotation - this.star.rotation) / frames;
+
+    let currentFrame = 0;
+    const rotationAnimation = setInterval(() => {
+        this.star.rotation += increment;
+        currentFrame++;
+
+        if (currentFrame >= frames) {
+            clearInterval(rotationAnimation);
+            // La animación ha finalizado, puedes realizar alguna acción adicional aquí si es necesario
+        }
+    }, 16.67); // Aproximadamente 60 fotogramas por segundo (1000 ms / 60 = 16.67)
+}
+
 }

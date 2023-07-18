@@ -17,6 +17,7 @@ export class SongGame_LevelSelector extends Container implements IScene {
     private rayo2: Sprite;
     private rayo1: Sprite;
     private buttonHighlight: Graphics;
+    private star: Sprite;
 
     constructor() {
         super();
@@ -49,11 +50,12 @@ export class SongGame_LevelSelector extends Container implements IScene {
 
 
 
-        // SCORE
-        const star = Sprite.from("Star");
-        star.scale.set(0.6);
-        star.position.set(534, 45);
-        this.addChild(star);
+        // UI SCORE
+        this.star = Sprite.from("Star");
+        this.star.anchor.set(0.5);
+        this.star.scale.set(0.6);
+        this.star.position.set(550, 75);
+        this.addChild(this.star);
 
         const textScore = new Text(Manager.score, {
             fontFamily: "Montserrat ExtraBold",

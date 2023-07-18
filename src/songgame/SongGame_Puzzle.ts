@@ -20,6 +20,7 @@ export class SongGame_Puzzle extends Container implements IScene {
     private textScore: Text;
     private textHelp: Text;
     private textLevel: Text;
+    private star: Sprite;
 
     constructor(img: string, difficulty: number) {
         super();
@@ -56,10 +57,11 @@ export class SongGame_Puzzle extends Container implements IScene {
         });
 
         // UI SCORE
-        const star = Sprite.from("Star");
-        star.scale.set(0.6);
-        star.position.set(534, 45);
-        this.addChild(star);
+        this.star = Sprite.from("Star");
+        this.star.anchor.set(0.5);
+        this.star.scale.set(0.6);
+        this.star.position.set(550, 75);
+        this.addChild(this.star);
 
         this.textScore = new Text(Manager.score, {
             fontFamily: "Montserrat ExtraBold",
@@ -73,7 +75,7 @@ export class SongGame_Puzzle extends Container implements IScene {
 
         // UI LEVEL
         const cinta = Sprite.from("Cinta");
-        cinta.position.set(228,103);
+        cinta.position.set(228, 103);
         this.addChild(cinta);
 
         this.textLevel = new Text(`NIVEL ${levels[Manager.currentLevel].name}`, {
@@ -86,7 +88,7 @@ export class SongGame_Puzzle extends Container implements IScene {
         this.textLevel.position.set(360, 136)
         this.addChild(this.textLevel);
 
-        
+
 
 
 
@@ -203,7 +205,6 @@ export class SongGame_Puzzle extends Container implements IScene {
 
 
 
-
     }
 
 
@@ -229,10 +230,11 @@ export class SongGame_Puzzle extends Container implements IScene {
     }
 
     private puzzleCompleted(): void {
-        Manager.levelsAvailable[Manager.currentLevel+1]=true;
+        this.starRotation();
+        Manager.levelsAvailable[Manager.currentLevel + 1] = true;
         this.textHelp.text = "ESCUCHÁ Y RECORDÁ\nEL NOMBRE DE LA BANDA";
         Manager.score++;
-        this.textScore.text=Manager.score;
+        this.textScore.text = Manager.score;
         sound.play("Correct");
         this.disableButtons();
         const texty: Text = new Text(
@@ -253,7 +255,7 @@ export class SongGame_Puzzle extends Container implements IScene {
         button1.setButtonColor(0x00C18C);
         button1.position.set(Manager.width / 2, 1170)
         button1.on("pointerup", () => {
-            if (levels[Manager.currentLevel+1].isPuzzle) {
+            if (levels[Manager.currentLevel + 1].isPuzzle) {
                 sound.stopAll();
                 Manager.currentLevel++;
                 Manager.changeScene(new SongGame_Puzzle(levels[Manager.currentLevel].song.img, levels[Manager.currentLevel].difficulty));
@@ -330,6 +332,23 @@ export class SongGame_Puzzle extends Container implements IScene {
                 this.checkComplete();
             }
         }, duration * 1000 / frames);
+    }
+
+    private starRotation(): void {
+        const targetRotation = this.star.rotation + Math.PI * 2; // Giro completo de 360 grados en radianes
+        const frames = 60; // Número de fotogramas para completar la animación
+        const increment = (targetRotation - this.star.rotation) / frames;
+
+        let currentFrame = 0;
+        const rotationAnimation = setInterval(() => {
+            this.star.rotation += increment;
+            currentFrame++;
+
+            if (currentFrame >= frames) {
+                clearInterval(rotationAnimation);
+                // La animación ha finalizado, puedes realizar alguna acción adicional aquí si es necesario
+            }
+        }, 16.67); // Aproximadamente 60 fotogramas por segundo (1000 ms / 60 = 16.67)
     }
 
 }
