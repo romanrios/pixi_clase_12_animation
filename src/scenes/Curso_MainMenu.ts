@@ -10,6 +10,7 @@ import { Clase_6 } from "./Clase_6";
 import { Clase_7 } from "./Clase_7";
 import { SongGame_Title } from "../songgame/SongGame_Title";
 import { Clase_8 } from "./Clase_8";
+import { Clase_9_SoundScene } from "./Clase_9_SoundScene";
 
 export class Curso_MainMenu extends Container implements IScene {
     private button0: SongButton;
@@ -88,6 +89,10 @@ export class Curso_MainMenu extends Container implements IScene {
 
         const button7 = createButton("Clase 8", button6.y + 150, Clase_8);
         this.addChild(button7);
+
+        const button8 = createButton("Clase 9", button7.y + 150, Clase_9_SoundScene);
+        this.addChild(button8);
+
 
 
 
