@@ -37,20 +37,19 @@ export class Clase_6 extends Container implements IScene {
 
         this.robotAnimated = new AnimatedSprite(
             [
-                Texture.from("RobotWalk0"),
-                Texture.from("RobotWalk1"),
-                Texture.from("RobotWalk2"),
-                Texture.from("RobotWalk3"),
-                Texture.from("RobotWalk4"),
-                Texture.from("RobotWalk5"),
-                Texture.from("RobotWalk6"),
-                Texture.from("RobotWalk7")
+                Texture.from("character_robot_walk0.png"),
+                Texture.from("character_robot_walk1.png"),
+                Texture.from("character_robot_walk2.png"),
+                Texture.from("character_robot_walk3.png"),
+                Texture.from("character_robot_walk4.png"),
+                Texture.from("character_robot_walk5.png"),
+                Texture.from("character_robot_walk6.png"),
+                Texture.from("character_robot_walk7.png")
             ],
             false
         );
         this.robotAnimated.play();
         this.robotAnimated.animationSpeed = 0.2;
-        this.robotAnimated.scale.set(1.5);
         this.robotAnimated.anchor.set(0.5, 1);
 
         this.physRobot = new PhysicsContainer()

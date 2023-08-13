@@ -1,6 +1,6 @@
 import { Container, Texture, TilingSprite, Text } from "pixi.js";
 import { IScene } from "../utils/IScene";
-import { Player } from "../game/Player";
+import { Player_clase5 } from "../game/Player_clase5";
 import { Platform } from "../game/Platform";
 import { checkCollision } from "../game/IHitbox";
 import { Button } from "../UI/Button";
@@ -8,7 +8,7 @@ import { Manager } from "../utils/Manager";
 
 export class Clase_8 extends Container implements IScene {
 
-    private playerRobot: Player;
+    private playerRobot: Player_clase5;
     private platforms: Platform[];
     private world: Container;
     private bg: TilingSprite;
@@ -40,7 +40,7 @@ export class Clase_8 extends Container implements IScene {
         this.world.addChild(plat2);
         this.platforms.push(plat2);
 
-        this.playerRobot = new Player();
+        this.playerRobot = new Player_clase5();
         this.playerRobot.x = 300; // POSICION X INICIAL DEL PLAYER
         this.world.addChild(this.playerRobot);
 
@@ -66,7 +66,7 @@ export class Clase_8 extends Container implements IScene {
         this.addChild(buttonLeft);
         buttonLeft.on('pointerdown', () => {
             this.playerRobot.speed.x = -350;
-            this.playerRobot.setPlayerScaleX(-1.5);
+            this.playerRobot.setPlayerScaleX(-1);
         })
             .on('pointerup', () => { this.playerRobot.speed.x = 0 })
             .on('pointerout', () => { this.playerRobot.speed.x = 0 })
@@ -77,7 +77,7 @@ export class Clase_8 extends Container implements IScene {
         this.addChild(buttonRight);
         buttonRight.on('pointerdown', () => {
             this.playerRobot.speed.x = 350;
-            this.playerRobot.setPlayerScaleX(1.5);
+            this.playerRobot.setPlayerScaleX(1);
         })
             .on('pointerup', () => { this.playerRobot.speed.x = 0 })
             .on('pointerupoutside', () => { this.playerRobot.speed.x = 0 })

@@ -11,6 +11,7 @@ import { Clase_7 } from "./Clase_7";
 import { SongGame_Title } from "../songgame/SongGame_Title";
 import { Clase_8 } from "./Clase_8";
 import { Clase_9_SoundScene } from "./Clase_9_SoundScene";
+import { Clase_12_AnimationScene } from "./Clase_12_AnimationScene"
 
 export class Curso_MainMenu extends Container implements IScene {
     private button0: SongButton;
@@ -72,26 +73,29 @@ export class Curso_MainMenu extends Container implements IScene {
         this.addChild(button1);
 
 
-        const button2 = createButton("Clases 1 y 2", button1.y+150, Clases_1_2);
+        const button2 = createButton("Clases 1 y 2: Intro", button1.y+150, Clases_1_2);
         this.addChild(button2);
 
-        const button3 = createButton("Clases 3 y 4", button2.y + 150, Clases_3_4);
+        const button3 = createButton("Clases 3 y 4: UI", button2.y + 150, Clases_3_4);
         this.addChild(button3);
 
-        const button4 = createButton("Clase 5", button3.y + 150, Clase_5_TickerScene);
+        const button4 = createButton("Clase 5: Update loop", button3.y + 150, Clase_5_TickerScene);
         this.addChild(button4);
 
-        const button5 = createButton("Clase 6", button4.y + 150, Clase_6);
+        const button5 = createButton("Clase 6: Física", button4.y + 150, Clase_6);
         this.addChild(button5);        
 
-        const button6 = createButton("Clase 7", button5.y + 150, Clase_7);
+        const button6 = createButton("Clase 7: Control\ny colisiones", button5.y + 150, Clase_7);
         this.addChild(button6);
 
-        const button7 = createButton("Clase 8", button6.y + 150, Clase_8);
+        const button7 = createButton("Clase 8: Movimiento\nde cámara", button6.y + 150, Clase_8);
         this.addChild(button7);
 
-        const button8 = createButton("Clase 9", button7.y + 150, Clase_9_SoundScene);
+        const button8 = createButton("Clase 9: Sonido", button7.y + 150, Clase_9_SoundScene);
         this.addChild(button8);
+
+        const button9 = createButton("Clase 12: Animación", button8.y + 150, Clase_12_AnimationScene);
+        this.addChild(button9);
 
 
 
@@ -131,8 +135,8 @@ export class Curso_MainMenu extends Container implements IScene {
             this.y = 0;
         }
 
-        if (this.y < -330) {
-            this.y = -330;
+        if (this.y < -500) {
+            this.y = -500;
         }
 
         this.isDragging = false;
@@ -158,8 +162,8 @@ export class Curso_MainMenu extends Container implements IScene {
             this.y = 0;
         }
 
-        if (this.y < -330) {
-            this.y = -330;
+        if (this.y < -500) {
+            this.y = -500;
         }
     }
 

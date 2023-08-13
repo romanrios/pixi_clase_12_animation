@@ -3,7 +3,7 @@ import { PhysicsContainer } from "../utils/PhysicsContainer";
 import { Keyboard } from "../utils/Keyboard";
 import { IHitbox } from "./IHitbox";
 
-export class Player extends PhysicsContainer implements IHitbox {
+export class Player_clase5 extends PhysicsContainer implements IHitbox {
 
 
     private static readonly GRAVITY = 1500;
@@ -38,7 +38,7 @@ export class Player extends PhysicsContainer implements IHitbox {
         );
         this.robotAnimated.play();
         this.robotAnimated.animationSpeed = 0.2;
-        this.robotAnimated.scale.set(Player.SCALE);
+        this.robotAnimated.scale.set(Player_clase5.SCALE);
         this.robotAnimated.anchor.set(0.5, 1);
 
         // const auxZero = new Graphics();
@@ -57,7 +57,7 @@ export class Player extends PhysicsContainer implements IHitbox {
         //this.addChild(auxZero);
         this.addChild(this.hitbox);
 
-        this.acceleration.y = Player.GRAVITY;
+        this.acceleration.y = Player_clase5.GRAVITY;
 
         Keyboard.down.on("ArrowUp", this.jump, this)
 
@@ -83,11 +83,11 @@ export class Player extends PhysicsContainer implements IHitbox {
         this.robotAnimated.update(deltaMS / (1000 / 60))
 
         if (Keyboard.state.get("ArrowRight")) {
-            this.speed.x = Player.MOVE_SPEED;
-            this.robotAnimated.scale.x = Player.SCALE
+            this.speed.x = Player_clase5.MOVE_SPEED;
+            this.robotAnimated.scale.x = Player_clase5.SCALE
         } else if (Keyboard.state.get("ArrowLeft")) {
-            this.speed.x = -Player.MOVE_SPEED;
-            this.robotAnimated.scale.x = -Player.SCALE;
+            this.speed.x = -Player_clase5.MOVE_SPEED;
+            this.robotAnimated.scale.x = -Player_clase5.SCALE;
         }
 
         if (Keyboard.state.get("ArrowDown")) {
@@ -117,7 +117,7 @@ export class Player extends PhysicsContainer implements IHitbox {
     jump() {
         if (this.canJump) {
             this.canJump = false;
-            this.speed.y = -Player.JUMP;
+            this.speed.y = -Player_clase5.JUMP;
         }
     }
 

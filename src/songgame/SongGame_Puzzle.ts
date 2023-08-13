@@ -31,7 +31,7 @@ export class SongGame_Puzzle extends Container implements IScene {
         const background = Sprite.from("BlackWall");
         this.addChild(background);
 
-        this.textHelp = new Text("RESOLVÉ EL ROMPECABEZAS", {
+        this.textHelp = new Text("GIRÁ LAS PIEZAS\nPARA FORMAR LA IMAGEN", {
             fontFamily: "Montserrat ExtraBold",
             fill: 0xFFFFFF,
             align: "center",

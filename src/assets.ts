@@ -211,5 +211,14 @@ export const manifest: ResolverManifest = {
                 SciFiBackgroundBig: "./scifibackgroundbig.jpg"
             }
         },
+
+
+        {
+            name: "clase_12",
+            assets:
+            {
+                robot: "./robot.json"
+            }
+        },
     ]
 }

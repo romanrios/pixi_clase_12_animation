@@ -1,14 +1,14 @@
 import { Container, Sprite } from "pixi.js";
 import { IScene } from "../utils/IScene";
 import { Manager } from "../utils/Manager";
-import { Player_clase5 } from "../game/Player_clase5";
+import { Player_clase12 } from "../game/Player_clase12";
 import { Platform } from "../game/Platform";
 import { checkCollision } from "../game/IHitbox";
 import { Button } from "../UI/Button";
 
-export class Clase_7 extends Container implements IScene {
+export class Clase_12_AnimationScene extends Container implements IScene {
 
-    private playerRobot: Player_clase5;
+    private playerRobot: Player_clase12;
 
 
     private platforms: Platform[];
@@ -31,7 +31,7 @@ export class Clase_7 extends Container implements IScene {
         this.addChild(platform2);
         this.platforms.push(platform2);
 
-        this.playerRobot = new Player_clase5();
+        this.playerRobot = new Player_clase12();
         this.addChild(this.playerRobot);
 
 
@@ -97,6 +97,12 @@ export class Clase_7 extends Container implements IScene {
             this.playerRobot.y = Manager.height - 180;
             this.playerRobot.speed.y = 0;
             this.playerRobot.canJump = true;
+            if (this.playerRobot.speed.x !== 0) {
+                this.playerRobot.playState("run",false)
+            }
+            else {
+                this.playerRobot.playState("idle",true)
+            }
         }
 
     }

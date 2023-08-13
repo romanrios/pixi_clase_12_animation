@@ -24,22 +24,21 @@ export class Clase_5_TickerScene extends Container implements IScene {
         // Animated Sprite
         this.robotAnimated = new AnimatedSprite(
             [
-                Texture.from("RobotWalk0"),
-                Texture.from("RobotWalk1"),
-                Texture.from("RobotWalk2"),
-                Texture.from("RobotWalk3"),
-                Texture.from("RobotWalk4"),
-                Texture.from("RobotWalk5"),
-                Texture.from("RobotWalk6"),
-                Texture.from("RobotWalk7")
+                Texture.from("character_robot_walk0.png"),
+                Texture.from("character_robot_walk1.png"),
+                Texture.from("character_robot_walk2.png"),
+                Texture.from("character_robot_walk3.png"),
+                Texture.from("character_robot_walk4.png"),
+                Texture.from("character_robot_walk5.png"),
+                Texture.from("character_robot_walk6.png"),
+                Texture.from("character_robot_walk7.png")
             ],
             false
         );
         this.robotAnimated.play();
         this.robotAnimated.animationSpeed = 0;
-        this.robotAnimated.scale.set(1.5);
         this.robotAnimated.anchor.x = 0.5;
-        this.robotAnimated.position.set(100, 500);
+        this.robotAnimated.position.set(100, 435);
         this.addChild(this.robotAnimated);
 
         const buttonRight: Button = new Button(0xf52222, "Next");
@@ -96,11 +95,11 @@ export class Clase_5_TickerScene extends Container implements IScene {
 
         if (this.movingRight == true) {
             this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
-            this.robotAnimated.scale.x = 1.5;
+            this.robotAnimated.scale.x = 1;
             this.robotAnimated.x += 2 * deltaFrame;
         } else if (this.movingLeft == true) {
             this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
-            this.robotAnimated.scale.x = -1.5;
+            this.robotAnimated.scale.x = -1;
             this.robotAnimated.x -= 2 * deltaFrame;
         } else {
             this.robotAnimated.animationSpeed = 0
@@ -109,12 +108,12 @@ export class Clase_5_TickerScene extends Container implements IScene {
 
         if (Keyboard.state.get("ArrowRight") || Keyboard.state.get("KeyD")) {
             this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
-            this.robotAnimated.scale.x = 1.5;
+            this.robotAnimated.scale.x = 1;
             this.robotAnimated.x += 2 * deltaFrame;
         }
         if (Keyboard.state.get("ArrowLeft") || Keyboard.state.get("KeyA")) {
             this.robotAnimated.animationSpeed = 0.2 * deltaFrame;
-            this.robotAnimated.scale.x = -1.5;
+            this.robotAnimated.scale.x = -1;
             this.robotAnimated.x -= 2 * deltaFrame;
         }
 
