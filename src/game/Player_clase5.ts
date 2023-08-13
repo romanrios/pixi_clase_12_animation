@@ -8,7 +8,7 @@ export class Player_clase5 extends PhysicsContainer implements IHitbox {
 
     private static readonly GRAVITY = 1500;
     private static readonly MOVE_SPEED = 350;
-    private static readonly SCALE = 1.5;
+    private static readonly SCALE = 1;
     private static readonly JUMP = 900;
 
     public canJump = true;
@@ -25,14 +25,14 @@ export class Player_clase5 extends PhysicsContainer implements IHitbox {
         // Animated Sprite
         this.robotAnimated = new AnimatedSprite(
             [
-                Texture.from("RobotWalk0"),
-                Texture.from("RobotWalk1"),
-                Texture.from("RobotWalk2"),
-                Texture.from("RobotWalk3"),
-                Texture.from("RobotWalk4"),
-                Texture.from("RobotWalk5"),
-                Texture.from("RobotWalk6"),
-                Texture.from("RobotWalk7")
+                Texture.from("character_robot_walk0.png"),
+                Texture.from("character_robot_walk1.png"),
+                Texture.from("character_robot_walk2.png"),
+                Texture.from("character_robot_walk3.png"),
+                Texture.from("character_robot_walk4.png"),
+                Texture.from("character_robot_walk5.png"),
+                Texture.from("character_robot_walk6.png"),
+                Texture.from("character_robot_walk7.png")
             ],
             false
         );
