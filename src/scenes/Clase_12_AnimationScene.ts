@@ -5,6 +5,7 @@ import { Player_clase12 } from "../game/Player_clase12";
 import { Platform } from "../game/Platform";
 import { checkCollision } from "../game/IHitbox";
 import { Button } from "../UI/Button";
+import { Easing, Tween } from "tweedle.js";
 
 export class Clase_12_AnimationScene extends Container implements IScene {
 
@@ -68,6 +69,35 @@ export class Clase_12_AnimationScene extends Container implements IScene {
         this.addChild(buttonJump);
         buttonJump.on('pointerdown', () => { this.playerRobot.jump() });
 
+
+        // TWEEDLE.JS
+
+        const star = Sprite.from("./songgame/star.svg")
+        star.position.set(100,400);
+        star.anchor.set(0.5);
+        this.addChild(star);
+
+        new Tween(star)
+        .to({x: 500, y: 600, alpha: 0.5, scale: {x:2,y:2}, angle:360},2000)
+        .repeat(4)
+        .yoyo(true)
+        .easing(Easing.Elastic.Out)
+        .onComplete(()=>{console.log("fin tween")})
+        .delay(3000)
+        .start();
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -98,10 +128,10 @@ export class Clase_12_AnimationScene extends Container implements IScene {
             this.playerRobot.speed.y = 0;
             this.playerRobot.canJump = true;
             if (this.playerRobot.speed.x !== 0) {
-                this.playerRobot.playState("run",false)
+                this.playerRobot.playState("run", false)
             }
             else {
-                this.playerRobot.playState("idle",true)
+                this.playerRobot.playState("idle", true)
             }
         }
 

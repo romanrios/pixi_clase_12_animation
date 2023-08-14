@@ -1,5 +1,6 @@
 import { Application, Ticker } from "pixi.js";
 import { IScene } from "./IScene";
+import { Group } from "tweedle.js";
 
 export class Manager {
 
@@ -124,6 +125,9 @@ export class Manager {
 
     // This update will be called by a pixi ticker and tell the scene that a tick happened
     private static update(deltaFrame: number): void {
+
+        Group.shared.update(); // for tweedle.js !! 
+
         // Let the current scene know that we updated it...
         // Just for funzies, sanity check that it exists first.
         if (Manager.currentScene) {
