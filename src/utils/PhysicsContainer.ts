@@ -3,7 +3,6 @@ import { Container, Point } from "pixi.js";
 export class PhysicsContainer extends Container {
 
     public speed: Point = new Point();
-
     public acceleration: Point = new Point();
 
     public update(deltaSeconds: number){
@@ -13,5 +12,4 @@ export class PhysicsContainer extends Container {
         this.speed.x += this.acceleration.x * deltaSeconds;
         this.speed.y += this.acceleration.y * deltaSeconds;
     }
-
 }

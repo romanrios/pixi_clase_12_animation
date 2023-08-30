@@ -16,16 +16,9 @@ export class Platform extends PhysicsContainer implements IHitbox {
         this.hitbox.beginFill(0x00FFFF,0.0001);
         this.hitbox.drawRect(0,-25,300,50);
         this.hitbox.endFill;
-        this.addChild(this.hitbox);
-
-        
-        // const auxZero = new Graphics();
-        // auxZero.beginFill(0xFF00FF);
-        // auxZero.drawCircle(0, 0, 10);
-        // auxZero.endFill();
-        // this.addChild(auxZero);
-
+        this.addChild(this.hitbox);        
     }
+
 
     public getHitbox(): Rectangle
     {

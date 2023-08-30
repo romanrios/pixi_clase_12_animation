@@ -12,7 +12,6 @@ export class StateAnimation extends Container implements IScene {
         this.addChild(this.animContainer);
     }
 
-
     public playState(stateName: string, restarAnim: boolean = false) {
         this.animContainer.removeChildren();
         const currentState = this.states.get(stateName);
@@ -44,7 +43,6 @@ export class StateAnimation extends Container implements IScene {
         tempAnim.play();
         this.states.set(stateName, tempAnim);
     }
-
 
     update(_deltaTime: number, _deltaFrame: number): void {
         for (const state of this.states.values()) {

@@ -6,7 +6,6 @@ export class Manager {
 
     private constructor() { /*this class is purely static. No constructor to see here*/ }
 
-
     // Safely store variables for our game
     private static app: Application;
     private static currentScene: IScene;
@@ -16,15 +15,12 @@ export class Manager {
     private static _score: number = 0;
     private static _levelsAvailable: boolean[] = [];
 
-
-
     public static get currentLevel(): number {
         return Manager._currentLevel;
     }
     public static set currentLevel(value: number) {
         Manager._currentLevel = value;
     }
-
 
     public static get score(): number {
         return Manager._score;
@@ -106,7 +102,6 @@ export class Manager {
         // Add the ticker
         //Manager.app.ticker.add(Manager.update)
         Ticker.shared.add(Manager.update)
-
     }
 
     // Call this function when you want to go to a new scene
