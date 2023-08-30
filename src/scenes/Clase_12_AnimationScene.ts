@@ -285,7 +285,11 @@ export class Clase_12_AnimationScene extends Container implements IScene {
         this.world.x = -this.playerRobot.x * this.worldTransform.a + Manager.width / 2
         this.background.tileScale.x = this.world.scale.x
         this.background.tileScale.y = this.world.scale.y
+
+        console.log(this.background.tilePosition.x)
         this.background.tilePosition.x = this.world.x
+        this.background.tilePosition.x %= 1280        
+
 
         // Sub-stepping
         if (this.playerRobot.speed.y > 1) {
