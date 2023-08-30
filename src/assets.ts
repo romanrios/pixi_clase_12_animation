@@ -14,9 +14,8 @@ export const manifest: ResolverManifest = {
                 Next: "./next.svg",
                 Gear: "./gear.png",
                 Particle: "./particle.png",
-                CartoonSmoke: "./cartoonSmoke.png"
-                //Montserrat: "./Montserrat-ExtraBold.ttf",
-                //Square: "./Square.ttf",
+                CartoonSmoke: "./cartoonSmoke.png",
+                Square: "./Square.ttf",
                 //Glow: "./glow.png",
                 //ThreeLines: "./3lines.svg",
                 //Retry: "./retry.svg",

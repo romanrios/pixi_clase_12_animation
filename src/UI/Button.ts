@@ -9,9 +9,10 @@ export class Button extends Container {
             Texture.from("Panel"),
             30, 30, 30, 30
         );
-        button.width = 120;
-        button.height = 120;
+        button.width = 110;
+        button.height = 110;
         button.pivot.set(button.width / 2);
+        button.alpha = 0.8;
         button.tint = tint;
         this.addChild(button);
         

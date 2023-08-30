@@ -16,10 +16,10 @@ export class SongButton extends Container {
         this.addChild(this.rectangle);
 
         const styly: TextStyle = new TextStyle({
-            fontFamily: "Montserrat ExtraBold",
+            fontFamily: "Square",
             fill: 0xFFFFFF,
             align: "center",
-            fontSize: 40,
+            fontSize: 60,
             lineHeight: 39
         });
         const texty: Text = new Text(band, styly);
