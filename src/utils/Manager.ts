@@ -10,33 +10,6 @@ export class Manager {
     private static app: Application;
     private static currentScene: IScene;
 
-    // QUIZGAME Current level & score variable getter and setter
-    private static _currentLevel: number = 0;
-    private static _score: number = 0;
-    private static _levelsAvailable: boolean[] = [];
-
-    public static get currentLevel(): number {
-        return Manager._currentLevel;
-    }
-    public static set currentLevel(value: number) {
-        Manager._currentLevel = value;
-    }
-
-    public static get score(): number {
-        return Manager._score;
-    }
-    public static set score(value: number) {
-        Manager._score = value;
-    }
-
-    public static get levelsAvailable(): boolean[] {
-        return Manager._levelsAvailable;
-    }
-    public static set levelsAvailable(value: boolean[]) {
-        Manager._levelsAvailable = value;
-    }
-
-
     // Width and Height are read-only after creation (for now)
     private static _width: number;
     private static _height: number;
@@ -49,14 +22,12 @@ export class Manager {
         return Manager._height;
     }
 
+
+
+
+
     // Use this function ONCE to start the entire machinery
     public static initialize(width: number, height: number, background: number): void {
-
-        // levelsCompleted 50 niveles false
-        for(let i = 0; i < 50; i++) {
-            Manager._levelsAvailable[i] = false;
-        }
-        Manager._levelsAvailable[0] = true;
 
         // store our width and height
         Manager._width = width;
@@ -104,6 +75,10 @@ export class Manager {
         Ticker.shared.add(Manager.update)
     }
 
+
+
+
+
     // Call this function when you want to go to a new scene
     public static changeScene(newScene: IScene): void {
         // Remove and destroy old scene... if we had one..
@@ -118,6 +93,10 @@ export class Manager {
     }
 
 
+
+
+
+
     // This update will be called by a pixi ticker and tell the scene that a tick happened
     private static update(deltaFrame: number): void {
 
@@ -130,8 +109,5 @@ export class Manager {
         }
         // as I said before, I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
     }
-
-
-
 }
 
