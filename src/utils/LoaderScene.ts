@@ -49,21 +49,25 @@ export class LoaderScene extends Container implements IScene {
     private async initializeLoader(): Promise<void>
     {
         await Assets.init({ manifest: manifest });
-
         const bundleIds =  manifest.bundles.map(bundle => bundle.name);
-
         await Assets.loadBundle(bundleIds, this.downloadProgress.bind(this));
     }
+
+
 
     private downloadProgress(progressRatio: number): void {
         this.loaderBarFill.scale.x = progressRatio;
     }
+
+
 
     private gameLoaded(): void {
         // Change scene to the game scene!
         Manager.changeScene(new Clase_12_AnimationScene());
     }
 
+
+    
     public update(_framesPassed: number): void {
         // To be a scene we must have the update method even if we don't use it.
     }
